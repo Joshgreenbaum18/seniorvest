@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>SeniorVest — 1031 Exchange into Senior Living</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#070f16}
+#root{min-height:100vh}
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:#070f16}
+::-webkit-scrollbar-thumb{background:rgba(200,169,110,0.22);border-radius:3px}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes shimmer{0%{background-position:-200% center}100%{background-position:200% center}}
+@keyframes floatBadge{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.a0{animation:fadeUp .6s ease forwards}
+.a1{animation:fadeUp .6s .1s ease forwards;opacity:0}
+.a2{animation:fadeUp .6s .2s ease forwards;opacity:0}
+.a3{animation:fadeUp .6s .3s ease forwards;opacity:0}
+.a4{animation:fadeUp .6s .4s ease forwards;opacity:0}
+input[type=range]{-webkit-appearance:none;appearance:none;height:3px;border-radius:2px;background:rgba(200,169,110,0.16);outline:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:13px;height:13px;border-radius:50%;background:#c8a96e;cursor:pointer}
+input[type=range]::-moz-range-thumb{width:13px;height:13px;border-radius:50%;background:#c8a96e;cursor:pointer;border:none}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const { useState, useEffect } = React;
+
+// ── DATA ──────────────────────────────────────────────────────────────────────
+
+const INVESTOR = {
+  name:"Joshua Hartwell", accredited:true, exchangeActive:true,
+  qiDeadline:"2026-05-28", totalInvested:487500, totalValue:531200,
+  totalDistributions:38640, yieldAvg:6.4,
+};
+
+const HOLDINGS = [
+  {id:1,name:"Sunrise Gardens Memory Care",location:"Scottsdale, AZ",type:"Memory Care",
+   invested:125000,currentValue:138400,ownershipPct:1.47,acquisitionDate:"2023-03-15",
+   cashYield:5.8,targetReturn:7.2,holdPeriod:"5–7 yrs",
+   distributions:[4200,4200,4350,4350,4500,4500,4650,4650],
+   nextDistAmt:4650,operator:"Brookdale Senior Living",occupancy:94,cmsStars:4,
+   is1031:true,exchangeDate:"2023-03-10"},
+  {id:2,name:"The Harborview CCRC",location:"Sarasota, FL",type:"CCRC",
+   invested:200000,currentValue:218900,ownershipPct:0.91,acquisitionDate:"2023-09-22",
+   cashYield:6.4,targetReturn:8.1,holdPeriod:"7–10 yrs",
+   distributions:[3800,3800,3950,3950,4100,4100,4250,4250],
+   nextDistAmt:4250,operator:"Five Star Senior Living",occupancy:91,cmsStars:5,
+   is1031:true,exchangeDate:"2023-09-18"},
+  {id:3,name:"Peachtree Assisted Living",location:"Atlanta, GA",type:"Assisted Living",
+   invested:162500,currentValue:173900,ownershipPct:1.18,acquisitionDate:"2024-01-08",
+   cashYield:6.1,targetReturn:7.8,holdPeriod:"5–8 yrs",
+   distributions:[2850,2850,2960,2960,3100,3100,3200,3200],
+   nextDistAmt:3200,operator:"Senior Care Centers",occupancy:95,cmsStars:4,
+   is1031:false,exchangeDate:null},
+];
+
+const LISTINGS = [
+  {id:1,name:"Sunrise Gardens Memory Care",location:"Scottsdale, AZ",type:"Memory Care",beds:64,image:"🏛️",
+   minInvestment1031:100000,minInvestmentCash:25000,targetReturn:"7.2%",cashYield:"5.8%",
+   investors:312,funded:68,status:"Open",highlight:"Triple-Net Lease",
+   operator:"Brookdale Senior Living",holdPeriod:"5–7 yrs",ticShares:40,sharesLeft:13,tag:"1031 Priority"},
+  {id:2,name:"The Harborview CCRC",location:"Sarasota, FL",type:"CCRC",beds:148,image:"🌊",
+   minInvestment1031:150000,minInvestmentCash:50000,targetReturn:"8.1%",cashYield:"6.4%",
+   investors:487,funded:54,status:"Open",highlight:"Preferred Return 6%",
+   operator:"Five Star Senior Living",holdPeriod:"7–10 yrs",ticShares:24,sharesLeft:11,tag:"Most Popular"},
+  {id:3,name:"Peachtree Assisted Living",location:"Atlanta, GA",type:"Assisted Living",beds:96,image:"🌸",
+   minInvestment1031:100000,minInvestmentCash:35000,targetReturn:"7.8%",cashYield:"6.1%",
+   investors:228,funded:81,status:"Closing Soon",highlight:"95% Occupancy",
+   operator:"Senior Care Centers",holdPeriod:"5–8 yrs",ticShares:32,sharesLeft:6,tag:"Closing Soon"},
+  {id:4,name:"Blue Ridge SNF Portfolio",location:"Nashville, TN",type:"Skilled Nursing",beds:210,image:"⛰️",
+   minInvestment1031:200000,minInvestmentCash:75000,targetReturn:"9.2%",cashYield:"7.5%",
+   investors:94,funded:33,status:"Open",highlight:"3-Facility Portfolio",
+   operator:"Diversicare Healthcare",holdPeriod:"8–12 yrs",ticShares:20,sharesLeft:13,tag:"Portfolio Deal"},
+  {id:5,name:"Magnolia Hospice Campus",location:"Charleston, SC",type:"Hospice",beds:48,image:"🌺",
+   minInvestment1031:100000,minInvestmentCash:20000,targetReturn:"6.9%",cashYield:"5.5%",
+   investors:176,funded:92,status:"Final Shares",highlight:"HUD-Backed Financing",
+   operator:"VITAS Healthcare",holdPeriod:"5–7 yrs",ticShares:16,sharesLeft:1,tag:"Final Shares"},
+  {id:6,name:"Lone Star IRF Center",location:"Dallas, TX",type:"Rehab (IRF)",beds:80,image:"⭐",
+   minInvestment1031:125000,minInvestmentCash:50000,targetReturn:"8.6%",cashYield:"6.8%",
+   investors:209,funded:47,status:"Open",highlight:"Medicare Certified",
+   operator:"CHRISTUS Health",holdPeriod:"7–10 yrs",ticShares:28,sharesLeft:15,tag:"New Listing"},
+];
+
+const DOCUMENTS = [
+  {propertyId:1,property:"Sunrise Gardens Memory Care",docs:[
+    {id:"d1",name:"Private Placement Memorandum",type:"PPM",size:"4.2 MB",date:"2023-02-28",category:"Legal"},
+    {id:"d2",name:"TIC Co-Ownership Agreement",type:"Agreement",size:"1.8 MB",date:"2023-03-12",category:"Legal"},
+    {id:"d3",name:"2024 Annual Financial Statement",type:"Financials",size:"2.1 MB",date:"2025-02-15",category:"Financial"},
+    {id:"d4",name:"CMS Survey Report — Q4 2025",type:"Regulatory",size:"0.9 MB",date:"2025-11-10",category:"Regulatory"},
+    {id:"d5",name:"Triple-Net Lease Abstract",type:"Lease",size:"0.6 MB",date:"2023-03-01",category:"Legal"},
+    {id:"d6",name:"K-1 Tax Schedule 2024",type:"Tax",size:"0.3 MB",date:"2025-03-10",category:"Tax"},
+  ]},
+  {propertyId:2,property:"The Harborview CCRC",docs:[
+    {id:"d7",name:"Private Placement Memorandum",type:"PPM",size:"5.1 MB",date:"2023-08-15",category:"Legal"},
+    {id:"d8",name:"TIC Co-Ownership Agreement",type:"Agreement",size:"2.0 MB",date:"2023-09-20",category:"Legal"},
+    {id:"d9",name:"2024 Annual Financial Statement",type:"Financials",size:"2.8 MB",date:"2025-02-20",category:"Financial"},
+    {id:"d10",name:"HUD Regulatory Agreement",type:"Regulatory",size:"1.2 MB",date:"2023-09-01",category:"Regulatory"},
+    {id:"d11",name:"K-1 Tax Schedule 2024",type:"Tax",size:"0.4 MB",date:"2025-03-10",category:"Tax"},
+    {id:"d12",name:"Rent Roll — Q1 2026",type:"Financials",size:"0.5 MB",date:"2026-02-01",category:"Financial"},
+  ]},
+  {propertyId:3,property:"Peachtree Assisted Living",docs:[
+    {id:"d13",name:"Private Placement Memorandum",type:"PPM",size:"3.8 MB",date:"2023-12-10",category:"Legal"},
+    {id:"d14",name:"TIC Co-Ownership Agreement",type:"Agreement",size:"1.6 MB",date:"2024-01-05",category:"Legal"},
+    {id:"d15",name:"2024 Annual Financial Statement",type:"Financials",size:"1.9 MB",date:"2025-02-18",category:"Financial"},
+    {id:"d16",name:"K-1 Tax Schedule 2024",type:"Tax",size:"0.3 MB",date:"2025-03-10",category:"Tax"},
+  ]},
+];
+
+const SIGNALS = [
+  {id:"s1",facility:"Golden Gate SNF",location:"Tampa, FL",source:"CMS",signal:"Star rating drop: 4★ → 2★",severity:"high",date:"2026-04-18",detail:"Staffing score declined from 78 to 42. Three consecutive quarters of below-average RN hours per resident day.",category:"Regulatory"},
+  {id:"s2",facility:"Heritage Gardens AL",location:"Memphis, TN",source:"CourtListener",signal:"Federal tax lien filed — $1.2M",severity:"high",date:"2026-04-17",detail:"IRS lien recorded against operating entity Heritage Care LLC. No prior liens on record.",category:"Financial"},
+  {id:"s3",facility:"Sunrise Ridge CCRC",location:"Charlotte, NC",source:"CMS",signal:"Occupancy below 75% — 3 consecutive quarters",severity:"medium",date:"2026-04-16",detail:"Occupancy declined from 88% in Q1 2025 to 71% in Q1 2026. Census pressure from new competition 0.8 mi away.",category:"Operational"},
+  {id:"s4",facility:"Blue Water Memory Care",location:"Scottsdale, AZ",source:"UCC Filings",signal:"UCC lien from equipment lender",severity:"medium",date:"2026-04-15",detail:"UCC-1 filed by MedEquip Finance LLC covering all medical equipment. Suggests capital constraint.",category:"Financial"},
+  {id:"s5",facility:"Cornerstone Hospice",location:"Nashville, TN",source:"OIG",signal:"Excluded from Medicare/Medicaid programs",severity:"critical",date:"2026-04-14",detail:"Operator principal excluded by OIG effective April 1, 2026. License risk elevated. Operator seeking reconsideration.",category:"Regulatory"},
+  {id:"s6",facility:"River Oaks Rehab (IRF)",location:"Houston, TX",source:"CMS",signal:"Ownership change filed — new LLC entity",severity:"low",date:"2026-04-13",detail:"CHOW filing submitted to CMS. Owner age 78 with 22-year tenure — potential succession-driven transaction.",category:"Ownership"},
+  {id:"s7",facility:"Magnolia Springs AL",location:"Birmingham, AL",source:"CourtListener",signal:"Chapter 11 filed by operator",severity:"critical",date:"2026-04-12",detail:"Magnolia Senior Care LLC filed voluntary Chapter 11. 4 facilities, $9M in liabilities. Seeking stalking horse bidder.",category:"Financial"},
+  {id:"s8",facility:"Parkview SNF",location:"Columbia, SC",source:"Google Reviews",signal:"Sentiment drop: 4.6 → 2.9 (90 days)",severity:"medium",date:"2026-04-11",detail:"31 new 1-star reviews citing staffing shortages. Director of Nursing departed January 2026.",category:"Operational"},
+];
+
+const FAQS_1031 = [
+  {q:"What exactly is a 1031 TIC exchange?",a:"Under IRC §1031, you can defer capital gains taxes by exchanging one investment property for another 'like-kind' property. A TIC interest qualifies because each investor holds a deeded fractional ownership in real property — not a security or fund interest. Our structures comply with IRS Revenue Procedure 2002-22."},
+  {q:"How do I identify replacement property within 45 days?",a:"Upon closing your relinquished property, you have 45 days to identify replacement property and 180 days to close. SeniorVest properties are pre-vetted and ready to close quickly — most investors identify and close within 30 days. We maintain a QI referral network to facilitate smooth coordination."},
+  {q:"Can I re-exchange at the end of the hold period?",a:"Yes. Because you hold a deeded TIC interest, you may execute a subsequent 1031 exchange at disposition, continuing to defer capital gains indefinitely. This is a core advantage of TIC over DST structures, which do not permit re-exchange."},
+  {q:"What happens if I can't use all my exchange equity?",a:"Boot (leftover exchange equity not reinvested) is taxable. We work with investors to size TIC interests precisely to absorb full exchange equity. For smaller equity amounts, we can stack two TIC interests across different properties to fully deploy proceeds."},
+];
+const FAQS_CASH = [
+  {q:"Can I invest without a 1031 exchange?",a:"Absolutely. All SeniorVest TIC offerings accept direct cash investment alongside 1031 exchange investors. You'll hold the same deeded TIC interest, earn the same distributions, and benefit from the same depreciation pass-through."},
+  {q:"What are the tax benefits for cash investors?",a:"TIC ownership allows you to claim your pro-rata share of depreciation against ordinary income, often generating paper losses that offset other investment income. Senior care facilities frequently produce strong depreciation shields via cost segregation."},
+  {q:"How are distributions taxed?",a:"Quarterly distributions are generally treated as ordinary income or return of capital depending on depreciation allocation. Your K-1 (issued by March 15) will detail all pass-through income, depreciation, and gain allocations. Consult your CPA for individual tax treatment."},
+];
+
+// ── HELPERS ───────────────────────────────────────────────────────────────────
+
+const fmt$ = n => n >= 1000000 ? `$${(n/1000000).toFixed(2)}M` : `$${n.toLocaleString()}`;
+const fmtK = n => `$${(n/1000).toFixed(0)}K`;
+const hGain = h => h.currentValue - h.invested;
+const hGainPct = h => (((h.currentValue - h.invested)/h.invested)*100).toFixed(1);
+
+const TAG_COLOR = {"1031 Priority":"#c8a96e","Most Popular":"#5b8fa8","Closing Soon":"#c0674a","Portfolio Deal":"#6a7f5e","Final Shares":"#9b4f4f","New Listing":"#4f7a9b"};
+const SEV = {critical:{bg:"rgba(180,50,50,0.15)",border:"rgba(180,50,50,0.4)",dot:"#e05050",lbl:"#e08080"},high:{bg:"rgba(200,100,50,0.12)",border:"rgba(200,100,50,0.35)",dot:"#e07840",lbl:"#e0a080"},medium:{bg:"rgba(200,169,110,0.1)",border:"rgba(200,169,110,0.28)",dot:"#c8a96e",lbl:"#c8a96e"},low:{bg:"rgba(91,143,168,0.1)",border:"rgba(91,143,168,0.25)",dot:"#5b9fc8",lbl:"#7ab8d4"}};
+const CAT_COLOR = {Legal:"#9b7fdf",Financial:"#e07840",Regulatory:"#e07060",Tax:"#6bba7f",Operational:"#c8a96e",Ownership:"#5b9fc8"};
+const DOC_ICON = {PPM:"📋",Agreement:"✍️",Financials:"📊",Regulatory:"🏛️",Lease:"🏠",Tax:"🧾"};
+const PORTAL_TABS = [{id:"portfolio",label:"Portfolio",icon:"◈"},{id:"calculator",label:"1031 Calculator",icon:"⟳"},{id:"vault",label:"Document Vault",icon:"🗄"},{id:"pipeline",label:"Pipeline Feed",icon:"📡"}];
+const LISTING_TYPES = ["All","Assisted Living","Memory Care","CCRC","Skilled Nursing","Hospice","Rehab (IRF)"];
+
+// ── SHARED MICRO-COMPONENTS ───────────────────────────────────────────────────
+
+function Logo({onClick}) {
+  return (
+    <div onClick={onClick} style={{display:"flex",alignItems:"center",gap:8,cursor:onClick?"pointer":"default"}}>
+      <div style={{width:26,height:26,background:"linear-gradient(135deg,#c8a96e,#7a5030)",borderRadius:6,display:"flex",alignItems:"center",justifyContent:"center",fontSize:13}}>⚕</div>
+      <span style={{fontFamily:"'Cormorant Garamond',serif",fontSize:20,fontWeight:700,color:"#f0ece3",letterSpacing:".02em"}}>SeniorVest</span>
+    </div>
+  );
+}
+
+function StarRating({n}) {
+  return <span style={{color:"#c8a96e",fontSize:11,letterSpacing:1}}>{"★".repeat(n)}{"☆".repeat(5-n)}</span>;
+}
+
+function Badge({label,color}) {
+  return <span style={{fontSize:9,fontWeight:700,letterSpacing:".07em",textTransform:"uppercase",padding:"3px 8px",borderRadius:20,background:`${color}28`,color,border:`1px solid ${color}50`}}>{label}</span>;
+}
+
+function FAQItem({q,a}) {
+  const [open,setOpen] = useState(false);
+  return (
+    <div style={{border:`1px solid ${open?"rgba(200,169,110,0.35)":"rgba(200,169,110,0.12)"}`,borderRadius:12,overflow:"hidden",marginBottom:8,transition:"border-color .2s"}}>
+      <button onClick={()=>setOpen(!open)} style={{width:"100%",background:open?"rgba(200,169,110,0.05)":"rgba(255,255,255,0.02)",border:"none",padding:"16px 20px",textAlign:"left",cursor:"pointer",color:"#d4d0c8",fontSize:13,fontWeight:600,display:"flex",justifyContent:"space-between",alignItems:"center",gap:16}}>
+        <span>{q}</span>
+        <span style={{color:"#c8a96e",fontSize:18,flexShrink:0,transition:"transform .2s",display:"inline-block",transform:open?"rotate(45deg)":"rotate(0deg)"}}>+</span>
+      </button>
+      {open && <div style={{padding:"0 20px 16px",color:"#7a8a96",fontSize:13,lineHeight:1.8}}>{a}</div>}
+    </div>
+  );
+}
+
+function Btn({children,gold,onClick,style:s}) {
+  return (
+    <button onClick={onClick} style={{background:gold?"linear-gradient(135deg,#c8a96e,#a87c48)":"transparent",border:gold?"none":"1px solid rgba(200,169,110,0.3)",color:gold?"#0d1410":"#c8a96e",padding:"8px 18px",borderRadius:8,fontSize:13,fontWeight:gold?700:600,cursor:"pointer",...s}}>
+      {children}
+    </button>
+  );
+}
+
+// ── LISTING CARD ──────────────────────────────────────────────────────────────
+
+function ListingCard({p,mode,onOpen}) {
+  const minInv = mode==="1031" ? p.minInvestment1031 : p.minInvestmentCash;
+  const [hov,setHov] = useState(false);
+  return (
+    <div onClick={()=>onOpen(p)}
+      onMouseEnter={()=>setHov(true)} onMouseLeave={()=>setHov(false)}
+      style={{background:"rgba(255,255,255,0.025)",border:`1px solid ${hov?"rgba(200,169,110,0.4)":"rgba(200,169,110,0.14)"}`,borderRadius:16,overflow:"hidden",cursor:"pointer",transform:hov?"translateY(-4px)":"translateY(0)",boxShadow:hov?"0 20px 55px rgba(200,169,110,0.11)":"none",transition:"all .25s",display:"flex",flexDirection:"column"}}>
+      <div style={{background:"linear-gradient(135deg,#1a2a1e 0%,#0d1f2d 100%)",height:140,display:"flex",alignItems:"center",justifyContent:"center",position:"relative",fontSize:48}}>
+        {p.image}
+        <div style={{position:"absolute",top:10,left:10,background:TAG_COLOR[p.tag]||"#c8a96e",color:"#fff",fontSize:9,fontWeight:700,letterSpacing:".08em",padding:"3px 9px",borderRadius:20,textTransform:"uppercase"}}>{p.tag}</div>
+        {mode==="1031" && <div style={{position:"absolute",top:10,right:10,background:"rgba(200,169,110,0.18)",border:"1px solid rgba(200,169,110,0.45)",color:"#c8a96e",fontSize:8,fontWeight:700,padding:"3px 8px",borderRadius:20,letterSpacing:".06em"}}>§1031 READY</div>}
+      </div>
+      <div style={{padding:"16px 18px",flex:1,display:"flex",flexDirection:"column",gap:9}}>
+        <div>
+          <div style={{fontSize:15,fontWeight:700,color:"#f0ece3",fontFamily:"'Cormorant Garamond',serif",lineHeight:1.3}}>{p.name}</div>
+          <div style={{fontSize:10,color:"#5a6a75",marginTop:3}}>📍 {p.location} · {p.type} · {p.beds} beds</div>
+        </div>
+        <div style={{display:"flex",gap:7}}>
+          {[{l:"Target Return",v:p.targetReturn,hi:true},{l:"Cash Yield",v:p.cashYield},{l:"Hold",v:p.holdPeriod}].map(r=>(
+            <div key={r.l} style={{flex:1,background:r.hi?"rgba(200,169,110,0.1)":"rgba(255,255,255,0.03)",border:r.hi?"1px solid rgba(200,169,110,0.28)":"1px solid rgba(255,255,255,0.05)",borderRadius:7,padding:"6px 0",textAlign:"center"}}>
+              <div style={{fontSize:13,fontWeight:700,color:r.hi?"#c8a96e":"#c4c0b8"}}>{r.v}</div>
+              <div style={{fontSize:7,color:"#3a4a55",textTransform:"uppercase",letterSpacing:".06em",marginTop:2}}>{r.l}</div>
+            </div>
+          ))}
+        </div>
+        <div style={{fontSize:10,color:"#7aa8bc",background:"rgba(91,143,168,0.07)",border:"1px solid rgba(91,143,168,0.16)",borderRadius:6,padding:"4px 9px",display:"inline-flex",alignItems:"center",gap:4}}>
+          <span style={{color:"#5b8fa8"}}>✦</span>{p.highlight}
+        </div>
+        <div>
+          <div style={{display:"flex",justifyContent:"space-between",fontSize:9,color:"#3a4a55",marginBottom:4}}>
+            <span>{p.funded}% funded</span>
+            <span style={{color:"#c8a96e"}}>{p.sharesLeft}/{p.ticShares} TIC shares left</span>
+          </div>
+          <div style={{height:4,background:"rgba(255,255,255,0.06)",borderRadius:10}}>
+            <div style={{height:"100%",width:`${p.funded}%`,background:"linear-gradient(90deg,#c8a96e,#e8c98e)",borderRadius:10}}/>
+          </div>
+        </div>
+        <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",paddingTop:2}}>
+          <div style={{fontSize:11}}><span style={{color:"#c8a96e",fontWeight:700}}>${(minInv/1000).toFixed(0)}K</span><span style={{color:"#3a4a55"}}> min {mode==="1031"?"(1031)":"(cash)"}</span></div>
+          <div style={{fontSize:10,color:p.status==="Open"?"#6bba7f":p.status==="Final Shares"?"#e07050":"#e0a050",display:"flex",alignItems:"center",gap:3,fontWeight:600}}>
+            <span style={{width:5,height:5,borderRadius:"50%",background:"currentColor",display:"inline-block",animation:p.status==="Open"?"pulse 2s infinite":"none"}}/>
+            {p.status}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── LISTING MODAL ─────────────────────────────────────────────────────────────
+
+function ListingModal({p,mode,onClose}) {
+  if (!p) return null;
+  const minInv = mode==="1031" ? p.minInvestment1031 : p.minInvestmentCash;
+  return (
+    <div onClick={onClose} style={{position:"fixed",inset:0,background:"rgba(4,10,16,0.88)",backdropFilter:"blur(10px)",zIndex:1000,display:"flex",alignItems:"center",justifyContent:"center",padding:20,overflowY:"auto"}}>
+      <div onClick={e=>e.stopPropagation()} style={{background:"#0b1720",border:"1px solid rgba(200,169,110,0.28)",borderRadius:20,maxWidth:620,width:"100%",maxHeight:"90vh",overflowY:"auto",padding:32}}>
+        <div style={{display:"flex",justifyContent:"space-between",marginBottom:8}}>
+          <div>
+            <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:22,fontWeight:700,color:"#f0ece3"}}>{p.name}</div>
+            <div style={{color:"#5a6a75",fontSize:12,marginTop:3}}>📍 {p.location} · {p.type} · {p.beds} beds · {p.operator}</div>
+          </div>
+          <button onClick={onClose} style={{background:"none",border:"none",color:"#c8a96e",fontSize:22,cursor:"pointer",alignSelf:"flex-start",lineHeight:1}}>✕</button>
+        </div>
+        <div style={{display:"inline-flex",alignItems:"center",gap:6,background:mode==="1031"?"rgba(200,169,110,0.1)":"rgba(91,143,168,0.1)",border:`1px solid ${mode==="1031"?"rgba(200,169,110,0.3)":"rgba(91,143,168,0.3)"}`,borderRadius:20,padding:"4px 12px",fontSize:10,color:mode==="1031"?"#c8a96e":"#5b9fc8",fontWeight:700,marginBottom:18,letterSpacing:".06em",textTransform:"uppercase"}}>
+          {mode==="1031"?"⟳ 1031 Exchange Path · IRC §1031 Eligible":"💵 Direct Investment Path · TIC Co-Ownership"}
+        </div>
+        <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:10,marginBottom:18}}>
+          {[{l:"Target Return",v:p.targetReturn},{l:"Cash Yield",v:p.cashYield},{l:"Hold Period",v:p.holdPeriod},{l:"Min. Investment",v:`$${(minInv/1000).toFixed(0)}K`},{l:"TIC Shares Left",v:`${p.sharesLeft}/${p.ticShares}`},{l:"Investors",v:p.investors}].map(s=>(
+            <div key={s.l} style={{background:"rgba(200,169,110,0.06)",border:"1px solid rgba(200,169,110,0.12)",borderRadius:10,padding:"12px 14px",textAlign:"center"}}>
+              <div style={{fontSize:16,fontWeight:700,color:"#c8a96e"}}>{s.v}</div>
+              <div style={{fontSize:8,color:"#3a4a55",textTransform:"uppercase",letterSpacing:".07em",marginTop:3}}>{s.l}</div>
+            </div>
+          ))}
+        </div>
+        {mode==="1031" ? (
+          <div style={{marginBottom:18,padding:16,background:"rgba(200,169,110,0.05)",border:"1px solid rgba(200,169,110,0.18)",borderRadius:12}}>
+            <div style={{fontSize:10,color:"#c8a96e",fontWeight:700,marginBottom:8,textTransform:"uppercase",letterSpacing:".08em"}}>1031 Exchange Details · IRS Rev. Proc. 2002-22</div>
+            <p style={{color:"#7a8a96",fontSize:13,lineHeight:1.75,marginBottom:12}}>Each investor receives a deeded undivided fractional interest qualifying as like-kind real property for §1031 purposes. Compatible with your 45-day ID window. Re-exchange eligible at disposition.</p>
+            <div style={{display:"flex",gap:14,flexWrap:"wrap"}}>
+              {["Deeded Title","45-Day ID Compatible","180-Day Close Window","Re-exchange at Exit"].map(f=>(
+                <span key={f} style={{fontSize:11,color:"#8ab0c0",display:"flex",alignItems:"center",gap:4}}><span style={{color:"#c8a96e"}}>✓</span>{f}</span>
+              ))}
+            </div>
+          </div>
+        ) : (
+          <div style={{marginBottom:18,padding:16,background:"rgba(91,143,168,0.05)",border:"1px solid rgba(91,143,168,0.18)",borderRadius:12}}>
+            <div style={{fontSize:10,color:"#5b9fc8",fontWeight:700,marginBottom:8,textTransform:"uppercase",letterSpacing:".08em"}}>Direct Investment — Same Rights, No Exchange Required</div>
+            <p style={{color:"#7a8a96",fontSize:13,lineHeight:1.75}}>Invest fresh capital alongside 1031 co-owners. Receive identical distributions, depreciation pass-through on K-1, and identical exit rights. At disposition, you may execute your own 1031 exchange.</p>
+          </div>
+        )}
+        <div style={{display:"flex",gap:10}}>
+          <button style={{flex:1,background:"linear-gradient(135deg,#c8a96e,#a87c48)",border:"none",borderRadius:10,color:"#0d1410",fontWeight:700,fontSize:13,padding:"13px",cursor:"pointer"}}>
+            {mode==="1031"?"Reserve 1031 TIC Interest":"Reserve TIC Interest"}
+          </button>
+          <button style={{flex:1,background:"transparent",border:"1px solid rgba(200,169,110,0.3)",borderRadius:10,color:"#c8a96e",fontSize:13,fontWeight:600,padding:"13px",cursor:"pointer"}}>Download Offering Docs</button>
+        </div>
+        <div style={{textAlign:"center",fontSize:9,color:"#2a3a42",marginTop:10,lineHeight:1.6}}>For accredited investors only. Securities offered through registered broker-dealer, member FINRA/SIPC.</div>
+      </div>
+    </div>
+  );
+}
+
+// ── MARKETING: TAX CALC ───────────────────────────────────────────────────────
+
+function MarketingCalc({onPortal}) {
+  const [sp,setSp] = useState(1000000);
+  const [ba,setBa] = useState(300000);
+  const [rt,setRt] = useState(23.8);
+  const gain = Math.max(0,sp-ba);
+  const tax = Math.round(gain*(rt/100));
+  return (
+    <div style={{background:"rgba(200,169,110,0.04)",border:"1px solid rgba(200,169,110,0.2)",borderRadius:20,padding:"32px 36px"}}>
+      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:22,marginBottom:28}}>
+        {[{l:"Sale Price",v:sp,set:setSp,min:100000,max:20000000,step:50000,fmt:v=>`$${v.toLocaleString()}`},{l:"Cost Basis",v:ba,set:setBa,min:0,max:sp,step:10000,fmt:v=>`$${v.toLocaleString()}`},{l:"Combined Tax Rate",v:rt,set:setRt,min:15,max:40,step:0.5,fmt:v=>`${v}%`}].map(f=>(
+          <div key={f.l}>
+            <div style={{fontSize:10,color:"#5a6a75",textTransform:"uppercase",letterSpacing:".07em",marginBottom:8}}>{f.l}</div>
+            <div style={{fontSize:22,fontWeight:700,color:"#c8a96e",marginBottom:9,fontFamily:"'Cormorant Garamond',serif"}}>{f.fmt(f.v)}</div>
+            <input type="range" min={f.min} max={f.max} step={f.step} value={f.v} onChange={e=>f.set(Number(e.target.value))} style={{width:"100%"}}/>
+          </div>
+        ))}
+      </div>
+      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:12,marginBottom:20}}>
+        {[{l:"Capital Gain",v:`$${gain.toLocaleString()}`,c:"#d4d0c8",s:"without exchange"},{l:"Tax Owed (No Exchange)",v:`$${tax.toLocaleString()}`,c:"#e07060",s:"permanently lost"},{l:"Capital Preserved via 1031",v:`$${sp.toLocaleString()}`,c:"#6bba7f",s:"100% reinvested · $0 tax now"}].map(r=>(
+          <div key={r.l} style={{background:"rgba(0,0,0,0.28)",border:`1px solid ${r.c}22`,borderRadius:12,padding:16,textAlign:"center"}}>
+            <div style={{fontSize:20,fontWeight:700,color:r.c,fontFamily:"'Cormorant Garamond',serif"}}>{r.v}</div>
+            <div style={{fontSize:9,color:"#3a4a55",fontWeight:700,textTransform:"uppercase",letterSpacing:".07em",margin:"5px 0 3px"}}>{r.l}</div>
+            <div style={{fontSize:9,color:"#3a4a55"}}>{r.s}</div>
+          </div>
+        ))}
+      </div>
+      <div style={{textAlign:"center",fontSize:12,color:"#4a5a65"}}>
+        Full model with depreciation recapture + hold-period comparison in the{" "}
+        <span onClick={onPortal} style={{color:"#c8a96e",cursor:"pointer",fontWeight:700,textDecoration:"underline"}}>investor portal →</span>
+      </div>
+    </div>
+  );
+}
+
+// ── PORTAL: PORTFOLIO TAB ─────────────────────────────────────────────────────
+
+function PortfolioTab() {
+  const [sel,setSel] = useState(HOLDINGS[0]);
+  const totalGain = HOLDINGS.reduce((a,h)=>a+hGain(h),0);
+  const nextTotal = HOLDINGS.reduce((a,h)=>a+h.nextDistAmt,0);
+  return (
+    <div style={{display:"flex",flexDirection:"column",gap:20}}>
+      <div style={{display:"grid",gridTemplateColumns:"repeat(5,1fr)",gap:1,background:"rgba(200,169,110,0.1)",borderRadius:14,overflow:"hidden",border:"1px solid rgba(200,169,110,0.14)"}}>
+        {[{l:"Total Invested",v:fmt$(INVESTOR.totalInvested),s:"across 3 properties"},{l:"Current Value",v:fmt$(INVESTOR.totalValue),s:`+${fmt$(totalGain)} unrealized`,hi:true},{l:"Total Distributions",v:fmt$(INVESTOR.totalDistributions),s:"since inception"},{l:"Next Distribution",v:fmtK(nextTotal),s:"Apr 30, 2026"},{l:"Blended Yield",v:`${INVESTOR.yieldAvg}%`,s:"annualized cash-on-cash"}].map((s,i)=>(
+          <div key={i} style={{background:"#0a1520",padding:"16px 14px",textAlign:"center"}}>
+            <div style={{fontSize:18,fontWeight:700,fontFamily:"'Cormorant Garamond',serif",color:s.hi?"#6bba7f":"#c8a96e"}}>{s.v}</div>
+            <div style={{fontSize:10,fontWeight:600,color:"#9a9690",marginTop:3}}>{s.l}</div>
+            <div style={{fontSize:9,color:"#2a3a42",marginTop:2}}>{s.s}</div>
+          </div>
+        ))}
+      </div>
+      <div style={{display:"grid",gridTemplateColumns:"1fr 1.5fr",gap:14}}>
+        <div style={{display:"flex",flexDirection:"column",gap:8}}>
+          <div style={{fontSize:9,color:"#3a4a52",textTransform:"uppercase",letterSpacing:".09em",fontWeight:700,marginBottom:2}}>Your Holdings</div>
+          {HOLDINGS.map(h=>(
+            <div key={h.id} onClick={()=>setSel(h)} style={{background:sel?.id===h.id?"rgba(200,169,110,0.08)":"rgba(255,255,255,0.02)",border:`1px solid ${sel?.id===h.id?"rgba(200,169,110,0.4)":"rgba(255,255,255,0.06)"}`,borderRadius:12,padding:"13px 15px",cursor:"pointer",transition:"all .2s"}}>
+              <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:7}}>
+                <div>
+                  <div style={{fontSize:13,fontWeight:700,color:"#e8e4dc",fontFamily:"'Cormorant Garamond',serif"}}>{h.name}</div>
+                  <div style={{fontSize:9,color:"#3a4a52",marginTop:2}}>📍 {h.location} · {h.type}</div>
+                </div>
+                <div style={{textAlign:"right"}}>
+                  <div style={{fontSize:12,fontWeight:700,color:"#6bba7f"}}>+{hGainPct(h)}%</div>
+                  <div style={{fontSize:8,color:"#3a4a52"}}>gain</div>
+                </div>
+              </div>
+              <div style={{display:"flex",gap:10}}>
+                {[{l:"Invested",v:fmtK(h.invested)},{l:"Value",v:fmtK(h.currentValue)},{l:"Ownership",v:`${h.ownershipPct}%`}].map(m=>(
+                  <div key={m.l} style={{flex:1}}>
+                    <div style={{fontSize:9,color:"#2a3a42"}}>{m.l}</div>
+                    <div style={{fontSize:11,fontWeight:600,color:"#b0aca4"}}>{m.v}</div>
+                  </div>
+                ))}
+              </div>
+              {h.is1031 && <div style={{marginTop:7,fontSize:9,color:"#c8a96e",display:"flex",alignItems:"center",gap:4,fontWeight:600}}><span style={{width:4,height:4,borderRadius:"50%",background:"#c8a96e",display:"inline-block"}}/>1031 Exchange</div>}
+            </div>
+          ))}
+        </div>
+        {sel && (
+          <div style={{background:"rgba(255,255,255,0.025)",border:"1px solid rgba(200,169,110,0.2)",borderRadius:16,padding:"20px 22px",display:"flex",flexDirection:"column",gap:16}}>
+            <div>
+              <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:19,fontWeight:700,color:"#f0ece3"}}>{sel.name}</div>
+              <div style={{fontSize:10,color:"#3a4a52",marginTop:2}}>Acquired {sel.acquisitionDate} · {sel.ownershipPct}% TIC Ownership</div>
+            </div>
+            <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:8}}>
+              {[{l:"Invested",v:fmt$(sel.invested)},{l:"Current Value",v:fmt$(sel.currentValue),hi:true},{l:"Unrealized Gain",v:`+${fmt$(hGain(sel))}`,green:true},{l:"Cash Yield",v:`${sel.cashYield}%`},{l:"Target Return",v:`${sel.targetReturn}%`},{l:"Next Dist.",v:fmtK(sel.nextDistAmt)}].map(m=>(
+                <div key={m.l} style={{background:"rgba(0,0,0,0.2)",borderRadius:9,padding:"10px 11px"}}>
+                  <div style={{fontSize:13,fontWeight:700,color:m.green?"#6bba7f":m.hi?"#c8a96e":"#d4d0c8"}}>{m.v}</div>
+                  <div style={{fontSize:7,color:"#2a3a42",textTransform:"uppercase",letterSpacing:".07em",marginTop:3}}>{m.l}</div>
+                </div>
+              ))}
+            </div>
+            <div>
+              <div style={{fontSize:9,color:"#3a4a52",textTransform:"uppercase",letterSpacing:".09em",fontWeight:700,marginBottom:8}}>Distribution History (8 Qtrs)</div>
+              <div style={{display:"flex",alignItems:"flex-end",gap:5,height:48}}>
+                {sel.distributions.map((d,i)=>{
+                  const mx = Math.max(...sel.distributions);
+                  return (
+                    <div key={i} style={{flex:1,display:"flex",flexDirection:"column",alignItems:"center",gap:3}}>
+                      <div style={{width:"100%",height:(d/mx)*44,background:i===sel.distributions.length-1?"linear-gradient(180deg,#c8a96e,#a87c48)":"rgba(200,169,110,0.22)",borderRadius:3}}/>
+                      <div style={{fontSize:6,color:"#2a3a42"}}>Q{i+1}</div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+            <div style={{background:"rgba(0,0,0,0.18)",borderRadius:10,padding:"13px 15px"}}>
+              <div style={{fontSize:9,color:"#3a4a52",textTransform:"uppercase",letterSpacing:".09em",fontWeight:700,marginBottom:7}}>Operator Intelligence</div>
+              <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:8}}>
+                <div><div style={{fontSize:12,fontWeight:600,color:"#b0aca4"}}>{sel.operator}</div><div style={{marginTop:4}}><StarRating n={sel.cmsStars}/></div></div>
+                <div style={{display:"flex",gap:12}}>
+                  {[{v:`${sel.occupancy}%`,l:"Occupancy",c:"#6bba7f"},{v:`${sel.cmsStars}★`,l:"CMS Stars",c:"#c8a96e"}].map(s=>(
+                    <div key={s.l} style={{textAlign:"center"}}>
+                      <div style={{fontSize:17,fontWeight:700,color:s.c,fontFamily:"'Cormorant Garamond',serif"}}>{s.v}</div>
+                      <div style={{fontSize:8,color:"#2a3a42",textTransform:"uppercase",letterSpacing:".06em"}}>{s.l}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+            {sel.is1031 && (
+              <div style={{background:"rgba(200,169,110,0.06)",border:"1px solid rgba(200,169,110,0.16)",borderRadius:10,padding:"11px 13px"}}>
+                <div style={{fontSize:9,color:"#c8a96e",fontWeight:700,marginBottom:3,textTransform:"uppercase",letterSpacing:".08em"}}>⟳ 1031 Exchange Record</div>
+                <div style={{fontSize:11,color:"#6a7a80"}}>Exchange closed {sel.exchangeDate}. Re-exchange eligible at disposition.</div>
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// ── PORTAL: CALCULATOR TAB ────────────────────────────────────────────────────
+
+function CalculatorTab() {
+  const [sp,setSp] = useState(1500000);
+  const [ba,setBa] = useState(400000);
+  const [dep,setDep] = useState(120000);
+  const [fed,setFed] = useState(20);
+  const [st,setSt] = useState(5.4);
+  const [niit,setNiit] = useState(true);
+  const [ty,setTy] = useState(6.4);
+  const [hy,setHy] = useState(7);
+  const [sc,setSc] = useState("compare");
+  const gain = Math.max(0,sp-ba);
+  const dRec = Math.min(dep,gain);
+  const ltcg = Math.max(0,gain-dRec);
+  const totTax = dRec*0.25 + ltcg*((fed+st+(niit?3.8:0))/100);
+  const net = sp-totTax;
+  const inc1 = sp*(ty/100), inc2 = net*(ty/100);
+  const ladv = (inc1-inc2)*hy+totTax;
+  const fD = n=>`$${Math.round(n).toLocaleString()}`;
+  const sliders = [
+    {l:"Sale Price",v:sp,set:setSp,min:200000,max:20000000,step:50000,fmt:v=>`$${v.toLocaleString()}`},
+    {l:"Adjusted Cost Basis",v:ba,set:setBa,min:0,max:sp,step:10000,fmt:v=>`$${v.toLocaleString()}`},
+    {l:"Depreciation Taken",v:dep,set:setDep,min:0,max:2000000,step:5000,fmt:v=>`$${v.toLocaleString()}`},
+    {l:"Federal LTCG Rate",v:fed,set:setFed,min:0,max:23.8,step:0.2,fmt:v=>`${v}%`},
+    {l:"State Tax Rate",v:st,set:setSt,min:0,max:15,step:0.1,fmt:v=>`${v}%`},
+    {l:"Target Yield",v:ty,set:setTy,min:4,max:12,step:0.1,fmt:v=>`${v}%`},
+    {l:"Hold Period (Years)",v:hy,set:setHy,min:3,max:20,step:1,fmt:v=>`${v} yrs`},
+  ];
+  return (
+    <div style={{display:"flex",flexDirection:"column",gap:18}}>
+      <div style={{display:"flex",gap:5,background:"rgba(255,255,255,0.03)",borderRadius:11,padding:4}}>
+        {[["exchange","⟳ 1031 Scenario"],["sell","💸 Taxable Sale"],["compare","📊 Side-by-Side"]].map(([k,l])=>(
+          <button key={k} onClick={()=>setSc(k)} style={{flex:1,padding:"8px",borderRadius:8,border:"none",cursor:"pointer",fontSize:11,fontWeight:600,background:sc===k?"rgba(200,169,110,0.14)":"transparent",color:sc===k?"#c8a96e":"#3a4a52",transition:"all .2s"}}>{l}</button>
+        ))}
+      </div>
+      <div style={{display:"grid",gridTemplateColumns:"1fr 1.2fr",gap:18}}>
+        <div style={{display:"flex",flexDirection:"column",gap:10}}>
+          <div style={{fontSize:9,color:"#3a4a52",textTransform:"uppercase",letterSpacing:".09em",fontWeight:700}}>Sale Details</div>
+          {sliders.map(f=>(
+            <div key={f.l} style={{background:"rgba(255,255,255,0.025)",borderRadius:9,padding:"10px 13px"}}>
+              <div style={{display:"flex",justifyContent:"space-between",marginBottom:5}}>
+                <div style={{fontSize:11,color:"#5a6a75"}}>{f.l}</div>
+                <div style={{fontSize:12,fontWeight:700,color:"#c8a96e"}}>{f.fmt(f.v)}</div>
+              </div>
+              <input type="range" min={f.min} max={f.max} step={f.step} value={f.v} onChange={e=>f.set(Number(e.target.value))} style={{width:"100%"}}/>
+            </div>
+          ))}
+          <div onClick={()=>setNiit(!niit)} style={{display:"flex",alignItems:"center",gap:9,padding:"9px 13px",background:"rgba(255,255,255,0.025)",borderRadius:9,cursor:"pointer"}}>
+            <div style={{width:14,height:14,borderRadius:3,border:`2px solid ${niit?"#c8a96e":"rgba(200,169,110,0.3)"}`,background:niit?"rgba(200,169,110,0.2)":"transparent",display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0}}>
+              {niit && <span style={{color:"#c8a96e",fontSize:9,fontWeight:700}}>✓</span>}
+            </div>
+            <div style={{fontSize:11,color:"#6a7a85"}}>Apply 3.8% NIIT</div>
+          </div>
+        </div>
+        <div style={{display:"flex",flexDirection:"column",gap:11}}>
+          <div style={{fontSize:9,color:"#3a4a52",textTransform:"uppercase",letterSpacing:".09em",fontWeight:700}}>Analysis</div>
+          {sc!=="compare" ? (
+            <>
+              <div style={{background:"rgba(0,0,0,0.25)",border:"1px solid rgba(200,169,110,0.1)",borderRadius:12,padding:"16px 18px"}}>
+                <div style={{fontSize:10,color:"#5a6a75",fontWeight:600,marginBottom:10}}>Tax Breakdown</div>
+                {[{l:"Total Capital Gain",v:fD(gain),c:"#b0aca4"},{l:"Depreciation Recapture (25%)",v:fD(dRec*0.25),c:"#e09060"},{l:`LTCG (${fed+st+(niit?3.8:0)}% combined)`,v:fD(ltcg*((fed+st+(niit?3.8:0))/100)),c:"#e07060"},{l:"Total Tax Due",v:fD(totTax),c:"#e05050",bold:true}].map(r=>(
+                  <div key={r.l} style={{display:"flex",justifyContent:"space-between",padding:"5px 0",borderBottom:"1px solid rgba(255,255,255,0.04)"}}>
+                    <div style={{fontSize:11,color:"#5a6a75"}}>{r.l}</div>
+                    <div style={{fontSize:12,fontWeight:r.bold?700:600,color:r.c}}>{r.v}</div>
+                  </div>
+                ))}
+              </div>
+              <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:9}}>
+                <div style={{background:sc==="exchange"?"rgba(200,169,110,0.08)":"rgba(180,50,50,0.08)",border:`1px solid ${sc==="exchange"?"rgba(200,169,110,0.25)":"rgba(180,50,50,0.25)"}`,borderRadius:11,padding:14}}>
+                  <div style={{fontSize:8,fontWeight:700,textTransform:"uppercase",color:sc==="exchange"?"#c8a96e":"#e08080",marginBottom:7}}>{sc==="exchange"?"⟳ Via 1031":"💸 Taxable Sale"}</div>
+                  <div style={{fontSize:20,fontWeight:700,color:sc==="exchange"?"#6bba7f":"#e08080",fontFamily:"'Cormorant Garamond',serif"}}>{fD(sc==="exchange"?sp:net)}</div>
+                  <div style={{fontSize:9,color:"#2a3a42",marginTop:2}}>{sc==="exchange"?"100% reinvested":"after-tax proceeds"}</div>
+                  <div style={{fontSize:10,color:"#5a6a75",marginTop:7}}>Annual income:</div>
+                  <div style={{fontSize:15,fontWeight:700,color:sc==="exchange"?"#c8a96e":"#e09060"}}>{fD(sc==="exchange"?inc1:inc2)}/yr</div>
+                </div>
+                <div style={{background:"rgba(107,186,127,0.07)",border:"1px solid rgba(107,186,127,0.2)",borderRadius:11,padding:14}}>
+                  <div style={{fontSize:8,fontWeight:700,textTransform:"uppercase",color:"#6bba7f",marginBottom:7}}>1031 Advantage</div>
+                  <div style={{fontSize:20,fontWeight:700,color:"#6bba7f",fontFamily:"'Cormorant Garamond',serif"}}>{fD(totTax)}</div>
+                  <div style={{fontSize:9,color:"#2a3a42",marginTop:2}}>deferred today</div>
+                  <div style={{fontSize:10,color:"#5a6a75",marginTop:7}}>Over {hy} yrs:</div>
+                  <div style={{fontSize:15,fontWeight:700,color:"#6bba7f"}}>{fD(ladv)}</div>
+                </div>
+              </div>
+            </>
+          ) : (
+            <div style={{background:"rgba(0,0,0,0.2)",borderRadius:12,overflow:"hidden",border:"1px solid rgba(200,169,110,0.1)"}}>
+              {[["Metric","1031 Exchange","Taxable Sale"],["Sale Proceeds",fD(sp),fD(sp)],["Tax Due Now","$0",fD(totTax)],["Capital Deployed",fD(sp),fD(net)],[`Annual Income (${ty}%)`,fD(inc1),fD(inc2)],[`${hy}-Yr Income`,fD(inc1*hy),fD(inc2*hy)],[`${hy}-Yr Advantage`,fD(ladv),"—"]].map((row,ri)=>(
+                <div key={ri} style={{display:"grid",gridTemplateColumns:"1.2fr 1fr 1fr",background:ri===0?"rgba(0,0,0,0.3)":ri%2===0?"rgba(255,255,255,0.015)":"transparent",borderBottom:"1px solid rgba(255,255,255,0.04)"}}>
+                  {row.map((cell,ci)=>(
+                    <div key={ci} style={{padding:"10px 13px",fontSize:ri===0?9:12,textTransform:ri===0?"uppercase":"none",letterSpacing:ri===0?".07em":0,fontWeight:ri===0?600:ci===0?500:600,color:ri===0?"#3a4a52":ci===1?"#6bba7f":ci===2?"#e09070":"#7a8a90"}}>{cell}</div>
+                  ))}
+                </div>
+              ))}
+            </div>
+          )}
+          <div style={{background:"rgba(107,186,127,0.05)",border:"1px solid rgba(107,186,127,0.14)",borderRadius:10,padding:"11px 14px",fontSize:12,color:"#4a6a55",lineHeight:1.7}}>
+            <strong style={{color:"#6bba7f"}}>Bottom line:</strong> A 1031 exchange keeps <strong style={{color:"#6bba7f"}}>{fD(totTax)}</strong> working for you. Over {hy} years at {ty}% yield, the total advantage is approximately <strong style={{color:"#6bba7f"}}>{fD(ladv)}</strong>.
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── PORTAL: DOCUMENT VAULT ────────────────────────────────────────────────────
+
+function DocumentVaultTab() {
+  const [ap,setAp] = useState(null);
+  const [cf,setCf] = useState("All");
+  const [q,setQ] = useState("");
+  const all = DOCUMENTS.flatMap(p=>p.docs.map(d=>({...d,property:p.property,propertyId:p.propertyId})));
+  const filtered = all.filter(d=>(ap===null||d.propertyId===ap)&&(cf==="All"||d.category===cf)&&(q===""||d.name.toLowerCase().includes(q.toLowerCase())));
+  return (
+    <div style={{display:"flex",flexDirection:"column",gap:16}}>
+      <div style={{display:"flex",gap:8,flexWrap:"wrap",alignItems:"center"}}>
+        <input value={q} onChange={e=>setQ(e.target.value)} placeholder="Search documents…" style={{background:"rgba(255,255,255,0.04)",border:"1px solid rgba(200,169,110,0.18)",borderRadius:8,color:"#b0aca4",padding:"8px 13px",fontSize:12,outline:"none",width:200}}/>
+        <div style={{display:"flex",gap:4,flexWrap:"wrap"}}>
+          {["All","Legal","Financial","Regulatory","Tax"].map(c=>(
+            <button key={c} onClick={()=>setCf(c)} style={{padding:"6px 12px",borderRadius:20,border:`1px solid ${cf===c?(CAT_COLOR[c]||"#c8a96e")+"50":"rgba(255,255,255,0.06)"}`,background:cf===c?`${CAT_COLOR[c]||"#c8a96e"}15`:"rgba(255,255,255,0.03)",color:cf===c?(CAT_COLOR[c]||"#c8a96e"):"#3a4a52",fontSize:10,fontWeight:600,cursor:"pointer"}}>{c}</button>
+          ))}
+        </div>
+        <div style={{marginLeft:"auto",display:"flex",gap:4,flexWrap:"wrap"}}>
+          <button onClick={()=>setAp(null)} style={{padding:"6px 12px",borderRadius:7,border:`1px solid ${ap===null?"rgba(200,169,110,0.35)":"rgba(255,255,255,0.06)"}`,background:ap===null?"rgba(200,169,110,0.08)":"rgba(255,255,255,0.03)",color:ap===null?"#c8a96e":"#3a4a52",fontSize:10,fontWeight:600,cursor:"pointer"}}>All</button>
+          {DOCUMENTS.map(p=>(
+            <button key={p.propertyId} onClick={()=>setAp(p.propertyId)} style={{padding:"6px 12px",borderRadius:7,border:`1px solid ${ap===p.propertyId?"rgba(200,169,110,0.35)":"rgba(255,255,255,0.06)"}`,background:ap===p.propertyId?"rgba(200,169,110,0.08)":"rgba(255,255,255,0.03)",color:ap===p.propertyId?"#c8a96e":"#3a4a52",fontSize:10,fontWeight:600,cursor:"pointer",whiteSpace:"nowrap"}}>{p.property.split(" ").slice(0,2).join(" ")}</button>
+          ))}
+        </div>
+      </div>
+      <div style={{fontSize:10,color:"#2a3a42"}}>{filtered.length} document{filtered.length!==1?"s":""}</div>
+      <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(230px,1fr))",gap:9}}>
+        {filtered.map(doc=>(
+          <DocCard key={doc.id} doc={doc}/>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function DocCard({doc}) {
+  const [hov,setHov] = useState(false);
+  return (
+    <div onMouseEnter={()=>setHov(true)} onMouseLeave={()=>setHov(false)}
+      style={{background:hov?"rgba(200,169,110,0.04)":"rgba(255,255,255,0.025)",border:`1px solid ${hov?"rgba(200,169,110,0.3)":"rgba(255,255,255,0.06)"}`,borderRadius:11,padding:"13px 15px",cursor:"pointer",display:"flex",flexDirection:"column",gap:9,transition:"all .2s"}}>
+      <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start"}}>
+        <div style={{fontSize:22}}>{DOC_ICON[doc.type]||"📄"}</div>
+        <span style={{fontSize:8,color:CAT_COLOR[doc.category]||"#6a7a85",fontWeight:700,background:`${CAT_COLOR[doc.category]||"#6a7a85"}15`,border:`1px solid ${CAT_COLOR[doc.category]||"#6a7a85"}30`,padding:"2px 7px",borderRadius:10,textTransform:"uppercase",letterSpacing:".06em"}}>{doc.category}</span>
+      </div>
+      <div>
+        <div style={{fontSize:12,fontWeight:600,color:"#d4d0c8",lineHeight:1.35}}>{doc.name}</div>
+        <div style={{fontSize:9,color:"#2a3a42",marginTop:2}}>{doc.property.split(" ").slice(0,3).join(" ")}</div>
+      </div>
+      <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+        <div style={{fontSize:9,color:"#2a3a42"}}>{doc.date} · {doc.size}</div>
+        <button style={{background:"rgba(200,169,110,0.12)",border:"1px solid rgba(200,169,110,0.25)",borderRadius:5,color:"#c8a96e",fontSize:9,fontWeight:700,padding:"3px 9px",cursor:"pointer"}}>↓</button>
+      </div>
+    </div>
+  );
+}
+
+// ── PORTAL: PIPELINE TAB ──────────────────────────────────────────────────────
+
+function PipelineTab() {
+  const [exp,setExp] = useState(null);
+  const [cf,setCf] = useState("All");
+  const [sf,setSf] = useState("All");
+  const filtered = SIGNALS.filter(s=>(cf==="All"||s.category===cf)&&(sf==="All"||s.severity===sf));
+  return (
+    <div style={{display:"flex",flexDirection:"column",gap:16}}>
+      <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:8}}>
+        <div>
+          <div style={{fontSize:9,color:"#2a3a42",textTransform:"uppercase",letterSpacing:".09em",fontWeight:700}}>Acquisition Intelligence Feed</div>
+          <div style={{fontSize:11,color:"#3a4a52",marginTop:2}}>Live distress signals · Last synced Apr 20, 2026 · 6:14 AM</div>
+        </div>
+        <div style={{display:"flex",alignItems:"center",gap:7}}>
+          <span style={{width:6,height:6,borderRadius:"50%",background:"#6bba7f",display:"inline-block",animation:"pulse 2s infinite"}}/>
+          <span style={{fontSize:10,color:"#6bba7f",fontWeight:600}}>Pipeline Active</span>
+          <span style={{fontSize:9,color:"#2a3a42"}}>· CMS · CourtListener · OIG · UCC</span>
+        </div>
+      </div>
+      <div style={{display:"flex",gap:8,flexWrap:"wrap"}}>
+        <div style={{display:"flex",gap:4,flexWrap:"wrap"}}>
+          {["All","Financial","Regulatory","Operational","Ownership"].map(c=>(
+            <button key={c} onClick={()=>setCf(c)} style={{padding:"5px 11px",borderRadius:20,border:`1px solid ${cf===c?(CAT_COLOR[c]||"#c8a96e")+"60":"rgba(255,255,255,0.06)"}`,background:cf===c?`${CAT_COLOR[c]||"#c8a96e"}12`:"rgba(255,255,255,0.03)",color:cf===c?(CAT_COLOR[c]||"#c8a96e"):"#3a4a52",fontSize:10,fontWeight:600,cursor:"pointer"}}>{c}</button>
+          ))}
+        </div>
+        <div style={{display:"flex",gap:4,flexWrap:"wrap"}}>
+          {["All","critical","high","medium","low"].map(s=>(
+            <button key={s} onClick={()=>setSf(s)} style={{padding:"5px 11px",borderRadius:20,border:`1px solid ${sf===s?(SEV[s]?.border||"rgba(200,169,110,0.35)"):"rgba(255,255,255,0.06)"}`,background:sf===s?(SEV[s]?.bg||"rgba(200,169,110,0.1)"):"rgba(255,255,255,0.03)",color:sf===s?(SEV[s]?.lbl||"#c8a96e"):"#3a4a52",fontSize:10,fontWeight:600,cursor:"pointer",textTransform:"capitalize"}}>{s==="All"?"All Severity":s}</button>
+          ))}
+        </div>
+      </div>
+      <div style={{display:"flex",gap:10,flexWrap:"wrap"}}>
+        {["critical","high","medium","low"].map(sev=>{
+          const cnt = SIGNALS.filter(s=>s.severity===sev).length;
+          const st = SEV[sev];
+          return <div key={sev} style={{background:st.bg,border:`1px solid ${st.border}`,borderRadius:8,padding:"7px 12px",display:"flex",alignItems:"center",gap:6}}>
+            <span style={{width:5,height:5,borderRadius:"50%",background:st.dot,display:"inline-block"}}/>
+            <span style={{fontSize:12,fontWeight:700,color:st.lbl}}>{cnt}</span>
+            <span style={{fontSize:8,color:"#3a4a52",textTransform:"uppercase",letterSpacing:".07em"}}>{sev}</span>
+          </div>;
+        })}
+      </div>
+      <div style={{display:"flex",flexDirection:"column",gap:7}}>
+        {filtered.map(s=>{
+          const st = SEV[s.severity];
+          const isOpen = exp===s.id;
+          return (
+            <div key={s.id} style={{background:st.bg,border:`1px solid ${isOpen?st.border:st.border+"70"}`,borderRadius:12,overflow:"hidden"}}>
+              <div onClick={()=>setExp(isOpen?null:s.id)} style={{padding:"13px 16px",cursor:"pointer",display:"flex",alignItems:"flex-start",gap:10}}>
+                <span style={{width:7,height:7,borderRadius:"50%",background:st.dot,display:"inline-block",flexShrink:0,marginTop:5,animation:s.severity==="critical"?"pulse 1.4s infinite":"none"}}/>
+                <div style={{flex:1,minWidth:0}}>
+                  <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",gap:8,flexWrap:"wrap"}}>
+                    <div>
+                      <span style={{fontSize:13,fontWeight:700,color:"#e8e4dc",fontFamily:"'Cormorant Garamond',serif"}}>{s.facility}</span>
+                      <span style={{fontSize:10,color:"#3a4a52",marginLeft:8}}>📍 {s.location}</span>
+                    </div>
+                    <div style={{display:"flex",gap:5,alignItems:"center",flexShrink:0}}>
+                      <Badge label={s.severity} color={st.dot}/>
+                      <Badge label={s.category} color={CAT_COLOR[s.category]||"#c8a96e"}/>
+                      <span style={{fontSize:9,color:"#2a3a42"}}>{s.date}</span>
+                      <span style={{color:"#3a4a52",fontSize:11}}>{isOpen?"▲":"▼"}</span>
+                    </div>
+                  </div>
+                  <div style={{fontSize:11,color:st.lbl,marginTop:4,fontWeight:500}}>
+                    <span style={{fontSize:9,color:"#3a4a52",fontWeight:700,textTransform:"uppercase",marginRight:6}}>{s.source}</span>{s.signal}
+                  </div>
+                </div>
+              </div>
+              {isOpen && (
+                <div style={{padding:"0 16px 14px 33px",borderTop:`1px solid ${st.border}30`}}>
+                  <div style={{fontSize:12,color:"#6a7a80",lineHeight:1.75,paddingTop:10,marginBottom:12}}>{s.detail}</div>
+                  <div style={{display:"flex",gap:7,flexWrap:"wrap"}}>
+                    <button style={{background:"linear-gradient(135deg,#c8a96e,#a87c48)",border:"none",borderRadius:7,color:"#0d1410",fontWeight:700,fontSize:10,padding:"7px 14px",cursor:"pointer"}}>Request Due Diligence</button>
+                    <button style={{background:"transparent",border:`1px solid ${st.border}`,borderRadius:7,color:st.lbl,fontSize:10,fontWeight:600,padding:"7px 14px",cursor:"pointer"}}>View Facility Profile</button>
+                    <button style={{background:"transparent",border:"1px solid rgba(255,255,255,0.06)",borderRadius:7,color:"#3a4a52",fontSize:10,fontWeight:600,padding:"7px 14px",cursor:"pointer"}}>+ Watch List</button>
+                  </div>
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+// ── PORTAL VIEW ───────────────────────────────────────────────────────────────
+
+function Portal({onBack}) {
+  const [tab,setTab] = useState("portfolio");
+  const daysLeft = Math.ceil((new Date(INVESTOR.qiDeadline)-new Date())/86400000);
+  const titles = {portfolio:"Your current TIC holdings, valuations, and distribution history.",calculator:"Model your 1031 exchange tax deferral and income advantage.",vault:"All legal, financial, and regulatory documents for your investments.",pipeline:"Live acquisition signals from your automated distress intelligence pipeline."};
+  return (
+    <div style={{minHeight:"100vh",background:"#060d14",color:"#c4c0b8",fontFamily:"'DM Sans','Helvetica Neue',sans-serif",display:"flex",flexDirection:"column"}}>
+      {/* Portal nav */}
+      <div style={{background:"rgba(10,18,28,0.98)",borderBottom:"1px solid rgba(200,169,110,0.1)",padding:"0 28px",height:58,display:"flex",alignItems:"center",justifyContent:"space-between",position:"sticky",top:0,zIndex:100,flexShrink:0}}>
+        <div style={{display:"flex",alignItems:"center",gap:18}}>
+          <Logo onClick={onBack}/>
+          <div style={{width:1,height:20,background:"rgba(200,169,110,0.15)"}}/>
+          <span style={{fontSize:11,color:"#3a4a52",fontWeight:500}}>Investor Portal</span>
+        </div>
+        {INVESTOR.exchangeActive && (
+          <div style={{display:"flex",alignItems:"center",gap:7,background:"rgba(200,169,110,0.08)",border:"1px solid rgba(200,169,110,0.22)",borderRadius:9,padding:"5px 13px"}}>
+            <span style={{width:6,height:6,borderRadius:"50%",background:daysLeft<20?"#e07050":"#c8a96e",display:"inline-block",animation:"pulse 1.5s infinite"}}/>
+            <span style={{fontSize:11,color:"#c8a96e",fontWeight:600}}>{daysLeft} days</span>
+            <span style={{fontSize:10,color:"#5a6a70"}}>until 1031 deadline · {INVESTOR.qiDeadline}</span>
+          </div>
+        )}
+        <div style={{display:"flex",alignItems:"center",gap:11}}>
+          <div style={{textAlign:"right"}}>
+            <div style={{fontSize:12,fontWeight:600,color:"#d4d0c8"}}>{INVESTOR.name}</div>
+            <div style={{fontSize:9,color:"#2a3a42",display:"flex",gap:5,justifyContent:"flex-end"}}>
+              <span style={{color:"#6bba7f"}}>✓ Accredited</span><span>·</span><span style={{color:"#c8a96e"}}>⟳ 1031 Active</span>
+            </div>
+          </div>
+          <div style={{width:32,height:32,borderRadius:"50%",background:"linear-gradient(135deg,#c8a96e,#7a5030)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:13,fontWeight:700,color:"#0d1410"}}>
+            {INVESTOR.name.split(" ").map(n=>n[0]).join("")}
+          </div>
+        </div>
+      </div>
+      {/* Body */}
+      <div style={{display:"flex",flex:1,overflow:"hidden"}}>
+        {/* Sidebar */}
+        <div style={{width:196,background:"rgba(8,15,22,0.92)",borderRight:"1px solid rgba(200,169,110,0.07)",padding:"18px 0",display:"flex",flexDirection:"column",flexShrink:0,overflowY:"auto"}}>
+          <div style={{padding:"0 14px 14px",borderBottom:"1px solid rgba(255,255,255,0.04)",marginBottom:12}}>
+            <div style={{fontSize:8,color:"#2a3a42",textTransform:"uppercase",letterSpacing:".09em",fontWeight:700,marginBottom:8}}>Navigation</div>
+            {PORTAL_TABS.map(t=>(
+              <button key={t.id} onClick={()=>setTab(t.id)} style={{width:"100%",display:"flex",alignItems:"center",gap:8,padding:"8px 10px",borderRadius:8,border:"none",background:tab===t.id?"rgba(200,169,110,0.1)":"transparent",cursor:"pointer",marginBottom:2,textAlign:"left",transition:"background .2s",borderLeft:tab===t.id?"2px solid #c8a96e":"2px solid transparent"}}>
+                <span style={{fontSize:13,opacity:0.8}}>{t.icon}</span>
+                <span style={{fontSize:11,fontWeight:tab===t.id?700:500,color:tab===t.id?"#c8a96e":"#3a4a52"}}>{t.label}</span>
+              </button>
+            ))}
+          </div>
+          <div style={{padding:"0 14px",flex:1}}>
+            <div style={{fontSize:8,color:"#2a3a42",textTransform:"uppercase",letterSpacing:".09em",fontWeight:700,marginBottom:9}}>Quick Stats</div>
+            {[{l:"Portfolio Value",v:fmt$(INVESTOR.totalValue),c:"#c8a96e"},{l:"Total Gain",v:`+${fmt$(INVESTOR.totalValue-INVESTOR.totalInvested)}`,c:"#6bba7f"},{l:"Distributions YTD",v:"$12,100",c:"#b0aca4"},{l:"Properties",v:"3",c:"#b0aca4"}].map(s=>(
+              <div key={s.l} style={{marginBottom:9}}>
+                <div style={{fontSize:8,color:"#1a2a32",textTransform:"uppercase",letterSpacing:".06em"}}>{s.l}</div>
+                <div style={{fontSize:13,fontWeight:700,color:s.c,marginTop:1,fontFamily:"'Cormorant Garamond',serif"}}>{s.v}</div>
+              </div>
+            ))}
+          </div>
+          <div style={{padding:"11px 14px",borderTop:"1px solid rgba(255,255,255,0.04)"}}>
+            <button style={{width:"100%",background:"linear-gradient(135deg,#c8a96e,#a87c48)",border:"none",borderRadius:7,color:"#0d1410",fontWeight:700,fontSize:10,padding:"8px",cursor:"pointer"}}>+ New Investment</button>
+          </div>
+        </div>
+        {/* Content */}
+        <div style={{flex:1,overflowY:"auto",padding:"24px 28px"}}>
+          <div style={{marginBottom:20,display:"flex",justifyContent:"space-between",alignItems:"flex-start"}}>
+            <div>
+              <h1 style={{fontFamily:"'Cormorant Garamond',serif",fontSize:26,fontWeight:700,color:"#f0ece3"}}>{PORTAL_TABS.find(t=>t.id===tab)?.label}</h1>
+              <div style={{fontSize:11,color:"#2a3a42",marginTop:2}}>{titles[tab]}</div>
+            </div>
+            <span style={{fontSize:10,color:"#1a2a32"}}>April 20, 2026</span>
+          </div>
+          <div key={tab} style={{animation:"fadeIn .3s ease forwards"}}>
+            {tab==="portfolio"  && <PortfolioTab/>}
+            {tab==="calculator" && <CalculatorTab/>}
+            {tab==="vault"      && <DocumentVaultTab/>}
+            {tab==="pipeline"   && <PipelineTab/>}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── MARKETING VIEW ────────────────────────────────────────────────────────────
+
+function Marketing({onPortal}) {
+  const [mode,setMode] = useState("1031");
+  const [filter,setFilter] = useState("All");
+  const [sel,setSel] = useState(null);
+  const [faqTab,setFaqTab] = useState("1031");
+  const [email,setEmail] = useState("");
+  const [submitted,setSubmitted] = useState(false);
+  const [scrolled,setScrolled] = useState(false);
+  useEffect(()=>{
+    const fn=()=>setScrolled(window.scrollY>40);
+    window.addEventListener("scroll",fn);
+    return ()=>window.removeEventListener("scroll",fn);
+  },[]);
+  const listings = filter==="All" ? LISTINGS : LISTINGS.filter(p=>p.type===filter);
+  return (
+    <div style={{minHeight:"100vh",background:"#070f16",color:"#d4d0c8",fontFamily:"'DM Sans','Helvetica Neue',sans-serif"}}>
+      {/* NAV */}
+      <nav style={{position:"fixed",top:0,left:0,right:0,zIndex:100,padding:"0 40px",height:62,background:scrolled?"rgba(7,15,22,0.96)":"transparent",backdropFilter:scrolled?"blur(14px)":"none",borderBottom:scrolled?"1px solid rgba(200,169,110,0.08)":"none",display:"flex",alignItems:"center",justifyContent:"space-between",transition:"all .3s"}}>
+        <Logo/>
+        <div style={{display:"flex",gap:26,fontSize:13,color:"#5a6a75",fontWeight:500}}>
+          {["Properties","1031 Exchange","How It Works","About"].map(l=>(
+            <span key={l} style={{cursor:"pointer",transition:"color .2s"}} onMouseEnter={e=>e.target.style.color="#c8a96e"} onMouseLeave={e=>e.target.style.color="#5a6a75"}>{l}</span>
+          ))}
+        </div>
+        <div style={{display:"flex",gap:8}}>
+          <Btn onClick={onPortal}>Sign In</Btn>
+          <Btn gold onClick={onPortal}>Get Started</Btn>
+        </div>
+      </nav>
+
+      {/* HERO */}
+      <section style={{minHeight:"100vh",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",textAlign:"center",padding:"130px 40px 80px",background:"radial-gradient(ellipse 90% 65% at 50% 18%, rgba(200,169,110,0.09) 0%, transparent 65%)",position:"relative",overflow:"hidden"}}>
+        <div style={{position:"absolute",inset:0,opacity:0.03,backgroundImage:"linear-gradient(rgba(200,169,110,1) 1px,transparent 1px),linear-gradient(90deg,rgba(200,169,110,1) 1px,transparent 1px)",backgroundSize:"54px 54px",pointerEvents:"none"}}/>
+        <div className="a0" style={{display:"inline-flex",alignItems:"center",gap:8,background:"rgba(200,169,110,0.09)",border:"1px solid rgba(200,169,110,0.25)",borderRadius:30,padding:"6px 18px",fontSize:11,color:"#c8a96e",fontWeight:700,letterSpacing:".08em",textTransform:"uppercase",marginBottom:28}}>
+          <span style={{width:6,height:6,borderRadius:"50%",background:"#c8a96e",display:"inline-block",animation:"pulse 2s infinite"}}/>
+          IRC §1031 Exchange · Senior Living TIC · Accredited Investors
+        </div>
+        <div className="a1" style={{marginBottom:22}}>
+          <h1 style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"clamp(36px,6vw,72px)",fontWeight:700,color:"#f0ece3",lineHeight:1.06,maxWidth:840,marginBottom:4}}>The Premier Platform for</h1>
+          <h1 style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"clamp(36px,6vw,72px)",fontWeight:700,lineHeight:1.06,maxWidth:840,marginBottom:4}}>
+            <span style={{background:"linear-gradient(90deg,#c8a96e,#f2dfa0,#c8a96e)",backgroundSize:"200%",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",animation:"shimmer 4s linear infinite"}}>1031 Exchange</span>
+          </h1>
+          <h1 style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"clamp(36px,6vw,72px)",fontWeight:700,color:"#f0ece3",lineHeight:1.06,maxWidth:840}}>into Senior Living.</h1>
+        </div>
+        <p className="a2" style={{fontSize:16,color:"#5a6a75",maxWidth:540,lineHeight:1.8,marginBottom:30}}>
+          Defer capital gains. Own institutional-grade senior care as deeded TIC co-owners. Built for <strong style={{color:"#c8a96e"}}>1031 exchange investors</strong> — and welcoming to direct capital.
+        </p>
+        {/* Mode toggle */}
+        <div className="a3" style={{marginBottom:30}}>
+          <div style={{fontSize:10,color:"#3a4a50",textTransform:"uppercase",letterSpacing:".09em",marginBottom:10,fontWeight:700}}>I'm investing with:</div>
+          <div style={{display:"inline-flex",background:"rgba(255,255,255,0.04)",border:"1px solid rgba(200,169,110,0.18)",borderRadius:14,padding:5,gap:4}}>
+            <button onClick={()=>setMode("1031")} style={{padding:"11px 24px",borderRadius:10,border:mode==="1031"?"none":"1px solid transparent",cursor:"pointer",fontSize:13,fontWeight:700,transition:"all .25s",background:mode==="1031"?"linear-gradient(135deg,#c8a96e,#a87c48)":"transparent",color:mode==="1031"?"#0d1410":"#5a6a75"}}>⟳  1031 Exchange Funds</button>
+            <button onClick={()=>setMode("cash")} style={{padding:"11px 24px",borderRadius:10,cursor:"pointer",fontSize:13,fontWeight:600,transition:"all .25s",background:mode==="cash"?"rgba(91,143,168,0.2)":"transparent",color:mode==="cash"?"#8ed4f4":"#5a6a75",border:mode==="cash"?"1px solid rgba(91,143,168,0.38)":"1px solid transparent"}}>💵  Direct / Cash</button>
+          </div>
+          <div style={{marginTop:9,fontSize:11,color:"#3a4a50"}}>{mode==="1031"?"Showing 1031-optimized minimums. All properties accept exchange equity.":"Welcome — direct investors hold identical TIC deeds & earn the same distributions."}</div>
+        </div>
+        <div className="a3" style={{display:"flex",gap:11,flexWrap:"wrap",justifyContent:"center",marginBottom:64}}>
+          <Btn gold onClick={()=>document.getElementById("properties").scrollIntoView({behavior:"smooth"})} style={{fontSize:14,padding:"13px 26px"}}>
+            {mode==="1031"?"Find My Replacement Property →":"Browse Open Investments →"}
+          </Btn>
+          {mode==="1031" && <Btn onClick={()=>document.getElementById("why1031").scrollIntoView({behavior:"smooth"})} style={{fontSize:14,padding:"13px 26px"}}>1031 Exchange Guide</Btn>}
+        </div>
+        {/* Stats bar */}
+        <div className="a4" style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:1,maxWidth:840,width:"100%",background:"rgba(200,169,110,0.1)",borderRadius:16,overflow:"hidden",border:"1px solid rgba(200,169,110,0.15)"}}>
+          {[{v:"$284M",l:"Exchange Equity Deployed",s:"across 47 facilities"},{v:"6.4%",l:"Avg. Cash Yield",s:"annualized distributions"},{v:"18,400+",l:"Investors",s:"1031 & direct combined"},{v:"91.2%",l:"Portfolio Occupancy",s:"above national average"}].map((s,i)=>(
+            <div key={i} style={{background:"#070f16",padding:"20px 14px",textAlign:"center"}}>
+              <div style={{fontSize:24,fontWeight:700,fontFamily:"'Cormorant Garamond',serif",color:"#c8a96e"}}>{s.v}</div>
+              <div style={{fontSize:11,fontWeight:600,color:"#b4b0a8",marginTop:3}}>{s.l}</div>
+              <div style={{fontSize:9,color:"#2a3a42",marginTop:2}}>{s.s}</div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* WHY 1031 */}
+      <section id="why1031" style={{padding:"80px 40px",background:"radial-gradient(ellipse 80% 55% at 50% 50%, rgba(200,169,110,0.05) 0%, transparent 70%)"}}>
+        <div style={{maxWidth:1100,margin:"0 auto"}}>
+          <div style={{textAlign:"center",marginBottom:48}}>
+            <div style={{fontSize:11,color:"#c8a96e",textTransform:"uppercase",letterSpacing:".1em",fontWeight:700,marginBottom:8}}>The Core Strategy</div>
+            <h2 style={{fontFamily:"'Cormorant Garamond',serif",fontSize:42,fontWeight:700,color:"#f0ece3",marginBottom:10}}>Why 1031 + Senior Living Works</h2>
+            <p style={{color:"#4a5a65",fontSize:14,maxWidth:520,margin:"0 auto"}}>Senior care offers bond-like income from essential services — an ideal passive replacement for active real estate investors.</p>
+          </div>
+          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(260px,1fr))",gap:16,marginBottom:20}}>
+            {[{icon:"⟳",t:"Defer Capital Gains Indefinitely",c:"#c8a96e",d:"Exchange into a TIC interest and defer federal + state capital gains today. Re-exchange at exit, or step up at death — potentially eliminating the gain for heirs entirely."},{icon:"🏛️",t:"Institutional, Recession-Resilient Asset",c:"#6bba7f",d:"Senior living is government-reimbursed, demand is structurally growing (10,000 Boomers turn 65 daily), and replacement costs are high."},{icon:"📄",t:"Deeded TIC = True Like-Kind Property",c:"#5b9fc8",d:"Unlike DSTs (securities), TIC interests are direct real property deeds. Preserves your right to re-exchange, participate in refinancing votes, and exit on your own terms."},{icon:"💵",t:"100% Passive — Zero Landlord Duties",c:"#9b7fdf",d:"Triple-net and RIDEA leases mean licensed operators handle all staffing, licensing, and compliance. Receive quarterly distributions without a single maintenance call."}].map(c=>(
+              <div key={c.t} style={{background:"rgba(255,255,255,0.022)",border:`1px solid ${c.c}1a`,borderRadius:14,padding:"24px 26px",display:"flex",gap:16,alignItems:"flex-start"}}>
+                <div style={{fontSize:26,flexShrink:0,marginTop:2}}>{c.icon}</div>
+                <div><div style={{fontSize:15,fontWeight:700,color:c.c,marginBottom:7}}>{c.t}</div><div style={{fontSize:13,color:"#5a6a75",lineHeight:1.75}}>{c.d}</div></div>
+              </div>
+            ))}
+          </div>
+          <div style={{background:"rgba(200,169,110,0.03)",border:"1px solid rgba(200,169,110,0.15)",borderRadius:14,overflow:"hidden"}}>
+            <div style={{padding:"13px 22px",borderBottom:"1px solid rgba(200,169,110,0.1)",fontSize:10,fontWeight:700,color:"#c8a96e",letterSpacing:".06em",textTransform:"uppercase"}}>TIC vs. DST — Why We Use TIC</div>
+            <div style={{display:"grid",gridTemplateColumns:"2fr 1fr 1fr",fontSize:12,overflowX:"auto"}}>
+              {[["Feature","TIC (SeniorVest)","DST"],["Qualifies for §1031","✓ Yes","✓ Yes"],["Direct deeded ownership","✓ Yes","✗ Beneficial interest"],["Re-exchange at exit","✓ Yes","✗ Not permitted"],["Refinancing input","✓ Co-owner vote","✗ Sponsor controlled"],["Depreciation pass-through","✓ Pro-rata","✓ Pro-rata"],["Classified as security","✗ Real property","✓ Reg D"]].map((row,ri)=>
+                row.map((cell,ci)=>(
+                  <div key={`${ri}-${ci}`} style={{padding:"10px 16px",background:ri===0?"rgba(0,0,0,0.25)":ri%2===0?"rgba(255,255,255,0.01)":"transparent",borderBottom:"1px solid rgba(200,169,110,0.06)",color:ri===0?"#5a6a75":ci===1?"#6bba7f":ci===2?"#7a5a5a":"#6a7a85",fontWeight:ri===0?600:ci===0?500:400,fontSize:ri===0?9:12,textTransform:ri===0?"uppercase":"none",letterSpacing:ri===0?".07em":0}}>{cell}</div>
+                ))
+              )}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* TAX CALC */}
+      <section style={{padding:"0 40px 80px"}}>
+        <div style={{maxWidth:900,margin:"0 auto"}}>
+          <div style={{textAlign:"center",marginBottom:32}}>
+            <div style={{fontSize:11,color:"#c8a96e",textTransform:"uppercase",letterSpacing:".1em",fontWeight:700,marginBottom:8}}>Interactive Tool</div>
+            <h2 style={{fontFamily:"'Cormorant Garamond',serif",fontSize:36,fontWeight:700,color:"#f0ece3"}}>How Much Can You Preserve?</h2>
+          </div>
+          <MarketingCalc onPortal={onPortal}/>
+        </div>
+      </section>
+
+      {/* HOW IT WORKS */}
+      <section style={{padding:"0 40px 80px"}}>
+        <div style={{maxWidth:1100,margin:"0 auto"}}>
+          <div style={{textAlign:"center",marginBottom:44}}>
+            <div style={{fontSize:11,color:"#c8a96e",textTransform:"uppercase",letterSpacing:".1em",fontWeight:700,marginBottom:8}}>The Process</div>
+            <h2 style={{fontFamily:"'Cormorant Garamond',serif",fontSize:40,fontWeight:700,color:"#f0ece3"}}>Two Paths, One Platform</h2>
+          </div>
+          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(320px,1fr))",gap:20}}>
+            {[{lbl:"⟳ 1031 EXCHANGE PATH · PRIMARY",clr:"#c8a96e",bg:"rgba(200,169,110,0.06)",bdr:"rgba(200,169,110,0.22)",steps:[{n:"1",t:"Close Your Relinquished Property",d:"Your QI holds exchange proceeds. 45-day ID clock starts at closing."},{n:"2",t:"Identify SeniorVest as Replacement",d:"Identify a TIC interest within 45 days. We provide ID letters and QI coordination."},{n:"3",t:"Execute TIC Closing via QI",d:"Exchange funds wire from QI to escrow. TIC deed recorded — 180-day window satisfied."},{n:"4",t:"Earn Passive Quarterly Distributions",d:"100% of exchange equity preserved. Re-exchange at exit to continue deferral indefinitely."}],tip:null},
+             {lbl:"💵 DIRECT INVESTMENT PATH · WELCOME",clr:"#5b9fc8",bg:"rgba(91,143,168,0.055)",bdr:"rgba(91,143,168,0.18)",steps:[{n:"1",t:"Browse All Open Properties",d:"Every SeniorVest offering accepts direct capital alongside 1031 co-owners."},{n:"2",t:"Verify Accredited Investor Status",d:"Complete secure accreditation verification online in ~10 minutes."},{n:"3",t:"Fund & Receive Your TIC Deed",d:"Wire funds to escrow. Receive your deeded fractional ownership at closing."},{n:"4",t:"Collect Income + Depreciation Pass-Through",d:"Earn pro-rata distributions and K-1 depreciation alongside 1031 co-owners."}],tip:"💡 At exit, direct investors may execute their own 1031 exchange — starting your deferral journey."}
+            ].map(path=>(
+              <div key={path.lbl} style={{background:`linear-gradient(180deg,${path.bg} 0%,rgba(0,0,0,0) 100%)`,border:`1px solid ${path.bdr}`,borderRadius:20,padding:"26px 24px"}}>
+                <div style={{background:`${path.clr}20`,borderRadius:9,padding:"6px 13px",fontSize:10,fontWeight:700,color:path.clr,letterSpacing:".05em",display:"inline-block",marginBottom:20}}>{path.lbl}</div>
+                {path.steps.map((s,i)=>(
+                  <div key={i} style={{display:"flex",gap:13,marginBottom:i<3?16:0}}>
+                    <div style={{flexShrink:0}}>
+                      <div style={{width:26,height:26,borderRadius:"50%",background:`${path.clr}15`,border:`1px solid ${path.clr}40`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:10,fontWeight:700,color:path.clr}}>{s.n}</div>
+                      {i<3 && <div style={{width:1,height:14,background:`${path.clr}15`,margin:"3px auto"}}/>}
+                    </div>
+                    <div style={{paddingTop:3}}>
+                      <div style={{fontSize:13,fontWeight:700,color:"#e8e4dc",marginBottom:3}}>{s.t}</div>
+                      <div style={{fontSize:12,color:"#4a5a65",lineHeight:1.65}}>{s.d}</div>
+                    </div>
+                  </div>
+                ))}
+                {path.tip && <div style={{marginTop:18,padding:"10px 13px",background:"rgba(91,143,168,0.06)",border:"1px solid rgba(91,143,168,0.14)",borderRadius:8,fontSize:11,color:"#4a6a7a",lineHeight:1.65}}>{path.tip}</div>}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* PROPERTIES */}
+      <section id="properties" style={{padding:"0 40px 80px",maxWidth:1200,margin:"0 auto"}}>
+        <div style={{textAlign:"center",marginBottom:36}}>
+          <div style={{fontSize:11,color:"#c8a96e",textTransform:"uppercase",letterSpacing:".1em",fontWeight:700,marginBottom:8}}>Available Offerings</div>
+          <h2 style={{fontFamily:"'Cormorant Garamond',serif",fontSize:40,fontWeight:700,color:"#f0ece3"}}>Current Properties</h2>
+          <p style={{color:"#3a4a50",marginTop:10,fontSize:13}}>All properties accept both 1031 exchange and direct investment. 60-day due diligence: CMS audit, operator financial review, market analysis.</p>
+        </div>
+        <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",background:mode==="1031"?"rgba(200,169,110,0.05)":"rgba(91,143,168,0.05)",border:`1px solid ${mode==="1031"?"rgba(200,169,110,0.18)":"rgba(91,143,168,0.18)"}`,borderRadius:10,padding:"10px 16px",marginBottom:20,flexWrap:"wrap",gap:8}}>
+          <div style={{fontSize:12,color:mode==="1031"?"#c8a96e":"#5b9fc8",fontWeight:600}}>{mode==="1031"?"⟳ 1031 view — minimums reflect exchange equity requirements":"💵 Direct view — minimums reflect cash requirements"}</div>
+          <button onClick={()=>setMode(mode==="1031"?"cash":"1031")} style={{background:"transparent",border:`1px solid ${mode==="1031"?"rgba(200,169,110,0.25)":"rgba(91,143,168,0.25)"}`,borderRadius:7,color:mode==="1031"?"#c8a96e":"#5b9fc8",fontSize:10,fontWeight:600,padding:"5px 11px",cursor:"pointer"}}>Switch to {mode==="1031"?"Direct View":"1031 View"}</button>
+        </div>
+        <div style={{display:"flex",gap:7,flexWrap:"wrap",justifyContent:"center",marginBottom:26}}>
+          {LISTING_TYPES.map(f=>(
+            <button key={f} onClick={()=>setFilter(f)} style={{background:filter===f?"linear-gradient(135deg,#c8a96e,#a87c48)":"rgba(255,255,255,0.035)",border:filter===f?"none":"1px solid rgba(255,255,255,0.07)",color:filter===f?"#0d1410":"#5a6a75",padding:"7px 14px",borderRadius:30,fontSize:11,fontWeight:600,cursor:"pointer",transition:"all .2s"}}>{f}</button>
+          ))}
+        </div>
+        <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(300px,1fr))",gap:16}}>
+          {listings.map(p=><ListingCard key={p.id} p={p} mode={mode} onOpen={setSel}/>)}
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section style={{padding:"0 40px 80px",maxWidth:820,margin:"0 auto"}}>
+        <div style={{textAlign:"center",marginBottom:30}}><h2 style={{fontFamily:"'Cormorant Garamond',serif",fontSize:36,fontWeight:700,color:"#f0ece3"}}>Common Questions</h2></div>
+        <div style={{display:"flex",gap:5,marginBottom:20,background:"rgba(255,255,255,0.025)",borderRadius:12,padding:4}}>
+          {[["1031","⟳ 1031 Exchange Investors"],["cash","💵 Direct Investors"]].map(([k,l])=>(
+            <button key={k} onClick={()=>setFaqTab(k)} style={{flex:1,padding:"9px",borderRadius:8,border:"none",cursor:"pointer",fontSize:12,fontWeight:600,background:faqTab===k?(k==="1031"?"rgba(200,169,110,0.14)":"rgba(91,143,168,0.14)"):"transparent",color:faqTab===k?(k==="1031"?"#c8a96e":"#5b9fc8"):"#3a4a50",transition:"all .2s"}}>{l}</button>
+          ))}
+        </div>
+        {(faqTab==="1031"?FAQS_1031:FAQS_CASH).map((f,i)=><FAQItem key={i} q={f.q} a={f.a}/>)}
+      </section>
+
+      {/* CTA */}
+      <section style={{padding:"60px 40px 80px",background:"radial-gradient(ellipse 70% 80% at 50% 50%, rgba(200,169,110,0.07) 0%, transparent 70%)",textAlign:"center"}}>
+        <div style={{display:"inline-flex",alignItems:"center",gap:6,background:"rgba(200,169,110,0.08)",border:"1px solid rgba(200,169,110,0.18)",borderRadius:30,padding:"5px 16px",fontSize:10,color:"#c8a96e",fontWeight:700,textTransform:"uppercase",letterSpacing:".08em",marginBottom:18,animation:"floatBadge 3s ease infinite"}}>
+          <span style={{animation:"pulse 2s infinite"}}>●</span> Accepting 1031 Exchange & Direct Investors Now
+        </div>
+        <h2 style={{fontFamily:"'Cormorant Garamond',serif",fontSize:44,fontWeight:700,color:"#f0ece3",marginBottom:12}}>{mode==="1031"?"Your 45-Day Clock Is Ticking.":"Start Building Passive Income."}</h2>
+        <p style={{color:"#4a5a60",maxWidth:440,margin:"0 auto 28px",lineHeight:1.8,fontSize:14}}>{mode==="1031"?"SeniorVest properties are ready to close. Identify your 1031 replacement property today and preserve your capital gains.":"Join thousands of investors earning passive income from essential senior care. No exchange required."}</p>
+        <div style={{display:"flex",gap:9,justifyContent:"center",maxWidth:400,margin:"0 auto 14px"}}>
+          <input value={email} onChange={e=>setEmail(e.target.value)} placeholder="Enter your email" style={{flex:1,background:"rgba(255,255,255,0.04)",border:"1px solid rgba(200,169,110,0.2)",borderRadius:9,color:"#d4d0c8",padding:"12px 15px",fontSize:13,outline:"none"}}/>
+          <button onClick={()=>{if(email)setSubmitted(true);}} style={{background:"linear-gradient(135deg,#c8a96e,#a87c48)",border:"none",borderRadius:9,color:"#0d1410",fontWeight:700,fontSize:13,padding:"12px 20px",cursor:"pointer"}}>{submitted?"✓ Joined":"Get Access"}</button>
+        </div>
+        <div style={{fontSize:10,color:"#1e2e36"}}>For accredited investors only · No spam · Unsubscribe anytime</div>
+      </section>
+
+      {/* FOOTER */}
+      <footer style={{borderTop:"1px solid rgba(200,169,110,0.08)",padding:"30px 40px",display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:16}}>
+        <div>
+          <Logo/>
+          <div style={{fontSize:9,color:"#1e2e36",marginTop:6,maxWidth:380,lineHeight:1.65}}>Securities offered through registered broker-dealer, member FINRA/SIPC. Not an offer to sell securities. For accredited investors only. Consult your QI and tax advisor before executing a 1031 exchange.</div>
+        </div>
+        <div style={{display:"flex",gap:20,fontSize:11,color:"#2a3a40",flexWrap:"wrap"}}>
+          {["Properties","1031 Exchange","How It Works","Portal","Privacy","Terms"].map(l=>(
+            <span key={l} style={{cursor:"pointer",transition:"color .2s"}} onClick={l==="Portal"?onPortal:undefined} onMouseEnter={e=>e.target.style.color="#c8a96e"} onMouseLeave={e=>e.target.style.color="#2a3a40"}>{l}</span>
+          ))}
+        </div>
+      </footer>
+
+      <ListingModal p={sel} mode={mode} onClose={()=>setSel(null)}/>
+    </div>
+  );
+}
+
+// ── ROOT ──────────────────────────────────────────────────────────────────────
+
+function App() {
+  const [view,setView] = useState("marketing");
+  if (view==="portal") return <Portal onBack={()=>setView("marketing")}/>;
+  return <Marketing onPortal={()=>setView("portal")}/>;
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App/>);
+</script>
+</body>
+</html>
