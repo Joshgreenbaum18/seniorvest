@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MedElite Group — CGO Strategic Blueprint</title>
+<meta name="description" content="MedElite Group Chief Growth Officer Strategic Blueprint 2025–2029. 37 states, 16 specialty lines, $365M revenue target.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root{--t:#00C9A7;--b:#4F8EF7;--g:#E8B84B;--pk:#E05C97;--v:#9B72F7;--bg:#05090F;--sf:#0B1525;--cd:#0F1E30;--br:#162840;--tx:#EEF4FF;--mu:#7A96B8;--su:#9BB5CC}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--tx);font-family:'Syne',sans-serif;overflow-x:hidden;min-height:100vh}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background-image:linear-gradient(rgba(79,142,247,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(79,142,247,.03) 1px,transparent 1px);background-size:52px 52px}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:58px;background:rgba(5,9,15,.93);backdrop-filter:blur(20px);border-bottom:1px solid var(--br);display:flex;align-items:center;justify-content:space-between;padding:0 40px;gap:8px}
+.nb{display:flex;align-items:center;gap:12px;cursor:pointer;text-decoration:none}
+.nlogo{width:32px;height:32px;border-radius:7px;background:linear-gradient(135deg,var(--t),var(--b));display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:500;color:#000;flex-shrink:0}
+.nword{font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:700;color:var(--tx)}
+.ntag{font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--t);letter-spacing:.18em;line-height:1.2}
+.nl{display:flex;gap:2px;flex-wrap:wrap}
+.nl button{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.07em;text-transform:uppercase;color:var(--mu);background:transparent;border:1px solid transparent;padding:6px 11px;border-radius:5px;cursor:pointer;transition:all .15s;white-space:nowrap}
+.nl button:hover{color:var(--tx);border-color:var(--br)}
+.nl button.on{color:var(--t);border-color:rgba(0,201,167,.3);background:rgba(0,201,167,.07)}
+.ncta{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;background:var(--t);color:#000;font-weight:500;padding:8px 16px;border-radius:6px;border:none;cursor:pointer;transition:all .15s;white-space:nowrap;flex-shrink:0}
+.ncta:hover{background:#00e5bb;transform:translateY(-1px)}
+.pg{display:none;animation:fu .4s ease both}
+.pg.on{display:block}
+@keyframes fu{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.wrap{max-width:1100px;margin:0 auto;padding:52px 40px 80px}
+.ey{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--b);margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.ey::before{content:'';width:18px;height:1px;background:var(--b)}
+h2{font-family:'Cormorant Garamond',serif;font-size:clamp(24px,3.5vw,42px);font-weight:700;color:var(--tx);margin-bottom:10px;line-height:1.1}
+.sub{font-size:13px;color:var(--mu);line-height:1.8;max-width:660px;margin-bottom:32px}
+.card{background:var(--cd);border:1px solid var(--br);border-radius:12px;padding:22px 26px}
+.ctit{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:16px}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{text-align:left;padding:8px 10px;color:var(--mu);font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.08em;border-bottom:1px solid var(--br);font-weight:400}
+td{padding:9px 10px;border-bottom:1px solid #0d1f30;color:var(--su);vertical-align:top}
+tr:last-child td{border-bottom:none}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media(max-width:700px){.g2{grid-template-columns:1fr}}
+.pill{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.08em;border-radius:4px;padding:3px 9px;white-space:nowrap;display:inline-block}
+.pill-t{background:rgba(0,201,167,.1);border:1px solid rgba(0,201,167,.35);color:var(--t)}
+.pill-b{background:rgba(79,142,247,.1);border:1px solid rgba(79,142,247,.35);color:var(--b)}
+/* HERO */
+.hero{position:relative;overflow:hidden;min-height:calc(100vh - 58px);padding-top:58px;display:flex;flex-direction:column;justify-content:center}
+.hero-glow{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 70% 55% at 65% 38%,rgba(79,142,247,.07) 0%,transparent 60%),radial-gradient(ellipse 40% 40% at 18% 65%,rgba(0,201,167,.05) 0%,transparent 55%)}
+.hero-inner{max-width:1100px;margin:0 auto;padding:70px 40px 130px;position:relative;z-index:1;width:100%}
+.hero-tag{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--t);margin-bottom:20px;display:flex;align-items:center;gap:14px}
+.hero-tag::before{content:'';width:44px;height:1px;background:var(--t)}
+.hero-h1{font-family:'Cormorant Garamond',serif;font-size:clamp(48px,8vw,96px);font-weight:700;line-height:1.0;letter-spacing:-.025em;color:var(--tx);margin-bottom:8px}
+.hero-h1 span{color:var(--t)}
+.hero-deck{font-family:'Cormorant Garamond',serif;font-size:clamp(16px,2.5vw,24px);font-weight:600;font-style:italic;color:var(--mu);margin-bottom:28px}
+.hero-desc{font-size:14px;color:var(--su);line-height:1.85;max-width:560px;margin-bottom:40px}
+.hero-stats{display:flex;gap:30px;flex-wrap:wrap;margin-bottom:44px}
+.hstat{border-left:2px solid var(--br);padding-left:16px}
+.hstat-v{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:700;color:var(--tx);line-height:1}
+.hstat-v.acc{color:var(--t)}
+.hstat-l{font-size:10px;color:var(--mu);letter-spacing:.07em;margin-top:3px}
+.hero-btns{display:flex;gap:10px;flex-wrap:wrap}
+.btn-pri{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;background:linear-gradient(90deg,var(--t),var(--b));color:#000;font-weight:500;padding:13px 26px;border-radius:7px;border:none;cursor:pointer;transition:all .2s}
+.btn-pri:hover{transform:translateY(-2px);opacity:.9}
+.btn-ghost{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;background:transparent;color:var(--tx);padding:12px 26px;border-radius:7px;border:1px solid var(--br);cursor:pointer;transition:all .2s}
+.btn-ghost:hover{border-color:var(--b);color:var(--b)}
+.ticker{position:absolute;bottom:0;left:0;right:0;border-top:1px solid var(--br);background:rgba(11,21,37,.88);padding:10px 40px;display:flex;gap:32px;overflow-x:auto;white-space:nowrap}
+.titem{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--mu)}
+.titem strong{color:var(--t)}
+.tsep{color:var(--br)}
+/* POSTING CARD */
+.pcard{background:linear-gradient(135deg,#0a2040,#071830);border:1px solid rgba(0,201,167,.35);border-left:4px solid var(--t);border-radius:10px;padding:20px 24px;margin-bottom:24px}
+.pbdg{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.15em;color:var(--t);background:rgba(0,201,167,.1);border:1px solid rgba(0,201,167,.22);border-radius:3px;padding:2px 8px;display:inline-block;margin-bottom:12px}
+.ptxt{font-size:13px;color:#c5d5e8;line-height:1.9;font-style:italic}
+.ptxt strong{color:var(--t);font-style:normal;font-weight:600}
+/* RESP CARDS */
+.resp-card{background:var(--sf);border:1px solid var(--br);border-radius:10px;overflow:hidden;margin-bottom:12px}
+.rh{padding:12px 18px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--br)}
+.ri{font-size:16px}.rn{font-size:13px;font-weight:600;color:var(--tx)}
+.rb{padding:14px 18px;display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:600px){.rb{grid-template-columns:1fr}}
+.rlbl{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.1em;margin-bottom:5px}
+.rverb{font-size:11px;color:#c5d5e8;line-height:1.7;font-style:italic;border-left:2px solid;padding-left:10px;margin:0}
+.rexec{list-style:none;margin:0;padding:0}
+.rexec li{display:flex;gap:6px;font-size:11px;color:var(--su);line-height:1.55;margin-bottom:5px}
+/* QUICK WINS */
+.qwgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+.qwc{background:var(--sf);border:1px solid var(--br);border-radius:9px;padding:14px}
+.qwp{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;margin-bottom:9px}
+.qwl{list-style:none;margin:0;padding:0}
+.qwl li{display:flex;gap:6px;font-size:11px;color:var(--su);line-height:1.55;margin-bottom:4px}
+/* METRICS */
+.metgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:12px;margin-bottom:22px}
+.met{background:var(--cd);border:1px solid var(--br);border-radius:10px;padding:14px 16px;position:relative;overflow:hidden;transition:transform .2s}
+.met:hover{transform:translateY(-2px)}
+.mbar{position:absolute;top:0;left:0;right:0;height:2px}
+.mlbl{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.1em;color:var(--mu);margin-bottom:7px}
+.mval{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:700;color:var(--tx);margin-bottom:4px;line-height:1}
+.mch{font-size:11px;font-weight:600}
+.msub{font-size:10px;color:var(--mu)}
+/* SYNC/PULSE BARS */
+.sync-bar{background:linear-gradient(90deg,#071830,#0a1628);border:1px solid rgba(0,201,167,.2);border-radius:8px;padding:10px 18px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.sdot{width:7px;height:7px;border-radius:50%;background:var(--t);box-shadow:0 0 7px var(--t);animation:pulse 2s infinite;flex-shrink:0}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.slbl{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--t);letter-spacing:.1em}
+.ssrc{font-size:10px;color:var(--mu);margin-left:7px}
+.smeta{display:flex;gap:16px;flex-wrap:wrap}
+.si .sl{font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--mu);letter-spacing:.07em}
+.si .sv{font-size:11px;font-weight:600;color:var(--tx)}
+.pulse-bar{background:linear-gradient(90deg,#071830,#0a1628);border:1px solid rgba(232,184,75,.2);border-radius:8px;padding:10px 18px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.pdot{width:7px;height:7px;border-radius:50%;background:var(--g);box-shadow:0 0 7px var(--g);animation:pulse 2s infinite;flex-shrink:0}
+.plbl{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--g);letter-spacing:.1em}
+.pstats{display:flex;flex-wrap:wrap}
+.pi{border-left:1px solid var(--br);padding:0 12px}
+.pi .pl{font-family:'JetBrains Mono',monospace;font-size:7px;color:var(--mu);letter-spacing:.07em}
+.pi .pv{font-size:10px;color:#c5d5e8;margin-top:1px}
+/* ROI */
+.roi-note{font-size:11px;color:var(--su);padding:9px 14px;background:rgba(232,184,75,.05);border:1px solid rgba(232,184,75,.18);border-radius:6px;margin-bottom:14px}
+.roi-note span{color:var(--g)}
+/* ORG */
+.org-row{background:var(--sf);border:1px solid var(--br);border-radius:8px;padding:12px 16px;margin-bottom:10px;display:grid;grid-template-columns:200px 1fr 185px;gap:14px;align-items:center}
+@media(max-width:750px){.org-row{grid-template-columns:1fr}}
+.orole{font-size:12px;font-weight:600;color:var(--tx);margin-bottom:2px}
+.orep{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.07em}
+.oscope{font-size:11px;color:var(--su);line-height:1.55}
+.okpi{border-radius:6px;padding:8px 11px}
+.okl{font-family:'JetBrains Mono',monospace;font-size:7px;letter-spacing:.07em;margin-bottom:2px}
+.okv{font-size:10px;color:#c5d5e8;line-height:1.45}
+/* CULTURE */
+.cult-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(195px,1fr));gap:12px}
+.cult{background:var(--sf);border:1px solid var(--br);border-radius:9px;padding:14px}
+.culth{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.cico{font-size:16px}.cnm{font-size:12px;font-weight:600;color:var(--tx)}
+.cdesc{font-size:11px;color:var(--mu);line-height:1.6}
+/* HIRE */
+.hire-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+.hire{background:var(--sf);border:1px solid var(--br);border-radius:9px;padding:14px}
+.hiret{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:7px;gap:6px}
+.hiren{font-size:12px;font-weight:600;color:var(--tx);line-height:1.35}
+.hirew{font-family:'JetBrains Mono',monospace;font-size:7px;padding:2px 6px;border-radius:3px;white-space:nowrap}
+.hired{font-size:11px;color:var(--mu);line-height:1.55}
+/* PHASE */
+.phase-card{background:var(--cd);border:1px solid var(--br);border-radius:12px;overflow:hidden;margin-bottom:16px}
+.ph{padding:15px 22px;display:flex;align-items:center;gap:14px}
+.pnum{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:500;flex-shrink:0}
+.ptag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;margin-bottom:2px}
+.pname{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:700;color:var(--tx)}
+.pb{padding:15px 22px;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:9px}
+.ms{display:flex;gap:8px;align-items:flex-start}
+.msdot{width:5px;height:5px;border-radius:50%;margin-top:6px;flex-shrink:0}
+.mstxt{font-size:11.5px;color:var(--su);line-height:1.6}
+/* DEAL CARDS */
+.deal-card{background:var(--sf);border:1px solid var(--br);border-radius:10px;overflow:hidden;margin-bottom:14px;transition:border-color .2s}
+.deal-card:hover{border-color:var(--b)}
+.dh{padding:12px 18px;display:flex;justify-content:space-between;align-items:flex-start;border-bottom:1px solid var(--br);flex-wrap:wrap;gap:8px}
+.dn{font-size:13px;font-weight:600;color:var(--tx)}
+.dt{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.08em;margin-top:3px}
+.dmeta{display:flex;gap:8px;flex-wrap:wrap}
+.dchip{background:var(--cd);border:1px solid var(--br);border-radius:5px;padding:5px 9px;text-align:center;min-width:80px}
+.dcl{font-family:'JetBrains Mono',monospace;font-size:7px;letter-spacing:.07em;color:var(--mu);margin-bottom:2px}
+.dcv{font-size:10px;font-weight:600;color:var(--tx)}
+.db{padding:12px 18px;display:grid;grid-template-columns:2fr 1fr;gap:14px}
+@media(max-width:600px){.db{grid-template-columns:1fr}}
+.dilbl{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.08em;color:var(--mu);margin-bottom:5px}
+.ditxt{font-size:11px;color:var(--su);line-height:1.65}
+.dsrc{font-size:9px;color:#4a6080;font-style:italic;margin-top:5px}
+.droilbl{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.08em;color:var(--g);margin-bottom:5px}
+/* WATCH */
+.watching{background:var(--sf);border:1px solid var(--br);border-radius:10px;padding:14px;transition:border-color .2s}
+.watching:hover{border-color:var(--b)}
+.wt{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;gap:6px}
+.wn{font-size:12px;font-weight:600;color:var(--tx);line-height:1.4}
+.wu{font-family:'JetBrains Mono',monospace;font-size:7px;padding:2px 6px;border-radius:3px;white-space:nowrap}
+.wsz{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.07em;margin-bottom:7px}
+.wsig{font-size:10px;color:var(--mu);line-height:1.6;margin-bottom:6px}
+.wsig span{color:#4a6080}
+.wwhy{font-size:10px;color:#c5d5e8;line-height:1.6;border-top:1px solid var(--br);padding-top:7px}
+.wwhy span{color:var(--g)}
+/* PARTNERS */
+.partner-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(195px,1fr));gap:12px}
+.ptnr{background:var(--sf);border:1px solid var(--br);border-radius:9px;padding:14px}
+.pbdgw{font-size:8px;border-radius:3px;padding:2px 7px;letter-spacing:.08em;display:inline-block;margin-bottom:8px}
+.pnm{font-size:12px;font-weight:600;color:var(--tx);margin-bottom:4px}
+.pdsc{font-size:11px;color:var(--mu);line-height:1.55}
+/* NL */
+.nl-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.nlc{background:var(--sf);border:1px solid var(--br);border-radius:9px;padding:14px}
+.nlct{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px}
+.nlci{font-size:17px}
+.nlce{font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--t);background:rgba(0,201,167,.08);border:1px solid rgba(0,201,167,.2);border-radius:3px;padding:2px 6px;letter-spacing:.07em}
+.nlcn{font-size:12px;font-weight:600;color:var(--tx);margin-bottom:4px}
+.nlcd{font-size:11px;color:var(--mu);line-height:1.55}
+/* CAP */
+.cap-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
+.cap{background:var(--sf);border:1px solid var(--br);border-radius:9px;padding:14px}
+.capl{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.08em;margin-bottom:4px}
+.capv{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700;color:var(--tx);margin-bottom:4px}
+.capd{font-size:11px;color:var(--mu);line-height:1.5}
+/* ACTIONS */
+.action-dark{background:linear-gradient(135deg,#0a2040,#060d18);border:1px solid var(--br);border-radius:12px;padding:22px 26px}
+.albl{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;color:var(--g);margin-bottom:14px}
+.agrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.acard{background:var(--cd);border:1px solid var(--br);border-radius:8px;padding:12px 14px}
+.atop{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;gap:6px}
+.anm{font-size:11px;font-weight:600;color:var(--tx);line-height:1.35}
+.adu{font-family:'JetBrains Mono',monospace;font-size:9px}
+.adsc{font-size:10px;color:var(--mu);line-height:1.55}
+/* THESIS */
+.thesis{background:linear-gradient(135deg,#0a2040,#060d18);border:1px solid var(--br);border-radius:12px;padding:28px 34px;text-align:center;margin-top:26px}
+.thlbl{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.2em;color:var(--b);margin-bottom:10px}
+.thq{font-family:'Cormorant Garamond',serif;font-size:clamp(14px,2vw,19px);font-style:italic;color:#c5d5e8;line-height:1.9;max-width:700px;margin:0 auto 12px}
+.thatr{font-size:11px;color:#4a6080}
+/* VAL SOURCE */
+.valsource{font-size:9px;color:#4a6080;border-top:1px solid var(--br);padding-top:9px;margin-top:10px;font-style:italic}
+/* RESPONSIVE NAV */
+@media(max-width:900px){.nl{display:none}}
+@media(max-width:600px){.wrap{padding:40px 20px 60px}.hero-inner{padding:50px 20px 110px}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nb" onclick="goPg('home')">
+    <div class="nlogo">ME</div>
+    <div><div class="nword">MedElite Group</div><div class="ntag">CGO · Strategic Blueprint</div></div>
+  </a>
+  <div class="nl">
+    <button id="nb-home" class="on" onclick="goPg('home')">Home</button>
+    <button id="nb-role" onclick="goPg('role')">Role</button>
+    <button id="nb-sales" onclick="goPg('sales')">Sales</button>
+    <button id="nb-dash" onclick="goPg('dash')">Dashboard</button>
+    <button id="nb-acq" onclick="goPg('acq')">Live M&A</button>
+    <button id="nb-pillars" onclick="goPg('pillars')">Pillars</button>
+    <button id="nb-road" onclick="goPg('road')">Roadmap</button>
+  </div>
+  <button class="ncta" onclick="goPg('role')">View Role →</button>
+</nav>
+
+<!-- ═══ HOME ═══ -->
+<div id="pg-home" class="pg on">
+<div class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-inner">
+    <div class="hero-tag">Chief Growth Officer · Strategic Presentation 2025–2029</div>
+    <div class="hero-h1">MedElite<br><span>Growth</span><br>Blueprint</div>
+    <div class="hero-deck">Owning the National Post-Acute Market</div>
+    <p class="hero-desc">MedElite Group is the leading turnkey clinical partner for SNFs and long-term care facilities — 37 states, 16 specialty lines, and a proven treat-in-place model. This blueprint charts the path from $125M to $365M+ ARR by 2029.</p>
+    <div class="hero-stats">
+      <div class="hstat"><div class="hstat-v acc">37</div><div class="hstat-l">Active States</div></div>
+      <div class="hstat"><div class="hstat-v">16</div><div class="hstat-l">Specialty Lines</div></div>
+      <div class="hstat"><div class="hstat-v">360+</div><div class="hstat-l">Facility Partners</div></div>
+      <div class="hstat"><div class="hstat-v acc">$365M</div><div class="hstat-l">2029 Revenue Target</div></div>
+    </div>
+    <div class="hero-btns">
+      <button class="btn-pri" onclick="goPg('role')">View CGO Role</button>
+      <button class="btn-ghost" onclick="goPg('dash')">Open Dashboard</button>
+      <button class="btn-ghost" onclick="goPg('acq')">Live M&amp;A Intel</button>
+    </div>
+  </div>
+  <div class="ticker">
+    <span class="titem"><strong>37 States</strong> Active Footprint</span>
+    <span class="tsep">·</span>
+    <span class="titem"><strong>16 Specialties</strong> Clinical Lines</span>
+    <span class="tsep">·</span>
+    <span class="titem"><strong>$290B</strong> U.S. SNF Market by 2033</span>
+    <span class="tsep">·</span>
+    <span class="titem"><strong>Q1 2026</strong> Highest M&A Volume in 5 Years</span>
+    <span class="tsep">·</span>
+    <span class="titem"><strong>9.1% CAGR</strong> Global SNF Growth Through 2032</span>
+    <span class="tsep">·</span>
+    <span class="titem"><strong>medelitegrp.com</strong> Brooklyn, NY · Est. 2011</span>
+  </div>
+</div>
+</div>
+
+<!-- ═══ THE ROLE ═══ -->
+<div id="pg-role" class="pg" style="padding-top:58px">
+<div class="wrap">
+  <div class="ey">Chief Growth Officer · Indeed Job Posting</div>
+  <h2>The Mandate: Own MedElite's National Growth</h2>
+  <p class="sub">MedElite is seeking a skilled and compassionate CGO with experience in the Healthcare Provider Services space — driving revenue, occupancy, and market expansion across the post-acute care ecosystem.</p>
+  <div class="pcard">
+    <div class="pbdg">INDEED POSTING · VERBATIM</div>
+    <p class="ptxt">"If you're a skilled and compassionate Chief Growth Officer with experience in the Healthcare Provider Services Space looking for a challenging and rewarding opportunity with strong PTO benefits and work-life balance — <strong>we want YOU to apply!</strong>"</p>
+  </div>
+  <div class="card" style="border-top:2px solid var(--t);margin-bottom:22px">
+    <div class="ctit" style="color:var(--t)">Qualifications — Verbatim from Indeed</div>
+    <div id="quals-el"></div>
+  </div>
+  <div class="card" style="border-top:2px solid var(--b);margin-bottom:22px">
+    <div class="ctit" style="color:var(--b)">Responsibilities — Verbatim from Indeed</div>
+    <div id="resps-el"></div>
+  </div>
+  <div class="card" style="border-top:2px solid var(--g)">
+    <div class="ctit" style="color:var(--g)">CGO 90-Day Quick Win Plan</div>
+    <div class="qwgrid" id="qw-el"></div>
+  </div>
+  <div class="thesis"><div class="thlbl">The Opportunity</div><p class="thq">"MedElite is at an inflection point — 37 states, 16 specialty lines, and a proven model. The CGO joins at the moment of scale: the infrastructure is built, the brand is established, and the market is waiting."</p><div class="thatr">— Chief Growth Officer, MedElite Group · 2025</div></div>
+</div>
+</div>
+
+<!-- ═══ SALES ═══ -->
+<div id="pg-sales" class="pg" style="padding-top:58px">
+<div class="wrap">
+  <div class="ey">Sales Team Leadership</div>
+  <h2>Build, Inspire, Measure &amp; Grow the Sales Org</h2>
+  <p class="sub">The CGO's most leveraged internal opportunity: transforming MedElite's Partner Acquisition and BD teams into a world-class national sales engine — structured, coached, measured, and inspired to win.</p>
+  <div class="pcard" style="border-left-color:var(--v);border-color:rgba(155,114,247,.35)">
+    <div class="pbdg" style="color:var(--v);background:rgba(155,114,247,.1);border-color:rgba(155,114,247,.22)">CGO SALES LEADERSHIP MANDATE</div>
+    <p class="ptxt" style="font-style:normal">The CGO does not just set strategy — they <strong style="color:var(--v)">own the team that executes it.</strong> Recruiting top commercial talent, coaching them to excellence, holding them to clear metrics, and building the culture and career paths that make MedElite the destination employer for post-acute care sales professionals.</p>
+  </div>
+  <div class="card" style="border-top:2px solid var(--v);margin-bottom:22px">
+    <div class="ctit" style="color:var(--v)">Sales Organization Structure — Target State</div>
+    <div id="org-el"></div>
+  </div>
+  <div class="card" style="border-top:2px solid var(--t);margin-bottom:22px">
+    <div class="ctit" style="color:var(--t)">Sales Performance Metrics — Current vs. Target</div>
+    <div style="overflow-x:auto"><table><thead><tr><th>Metric</th><th>Current</th><th>Target</th><th>Growth Driver</th></tr></thead><tbody>
+      <tr><td style="font-weight:600;color:var(--tx)">Partner Acquisition Reps</td><td>~12</td><td style="color:var(--t);font-weight:700">35+</td><td style="font-size:10px">Scale with state expansion</td></tr>
+      <tr><td style="font-weight:600;color:var(--tx)">Avg Ramp Time</td><td>90 days</td><td style="color:var(--t);font-weight:700">60 days</td><td style="font-size:10px">Structured onboarding playbook</td></tr>
+      <tr><td style="font-weight:600;color:var(--tx)">Quota Attainment Rate</td><td>Est. 55%</td><td style="color:var(--t);font-weight:700">75%+</td><td style="font-size:10px">Improve with coaching cadence</td></tr>
+      <tr><td style="font-weight:600;color:var(--tx)">Pipeline Coverage Ratio</td><td>~2.5×</td><td style="color:var(--t);font-weight:700">4×</td><td style="font-size:10px">CRM hygiene + top-of-funnel investment</td></tr>
+      <tr><td style="font-weight:600;color:var(--tx)">New Facilities / Rep / Qtr</td><td>~3</td><td style="color:var(--t);font-weight:700">6+</td><td style="font-size:10px">BD Specialist + Clinical pairing model</td></tr>
+      <tr><td style="font-weight:600;color:var(--tx)">Rep Retention (Annual)</td><td>Est. 65%</td><td style="color:var(--t);font-weight:700">85%+</td><td style="font-size:10px">Career pathing + comp redesign</td></tr>
+    </tbody></table></div>
+  </div>
+  <div class="card" style="border-top:2px solid var(--g);margin-bottom:22px">
+    <div class="ctit" style="color:var(--g)">CGO Sales Culture Blueprint</div>
+    <div class="cult-grid">
+      <div class="cult" style="border-top:2px solid var(--t)"><div class="culth"><span class="cico" style="color:var(--t)">◆</span><span class="cnm">Inspect What You Expect</span></div><p class="cdesc">Weekly pipeline reviews with every rep. Real-time dashboards. No surprises in the forecast.</p></div>
+      <div class="cult" style="border-top:2px solid var(--b)"><div class="culth"><span class="cico" style="color:var(--b)">◈</span><span class="cnm">Coach, Don't Just Manage</span></div><p class="cdesc">Ride-alongs, call reviews, and 1:1 development plans for every rep. Feedback is a gift, not a threat.</p></div>
+      <div class="cult" style="border-top:2px solid var(--g)"><div class="culth"><span class="cico" style="color:var(--g)">◉</span><span class="cnm">Celebrate Performance</span></div><p class="cdesc">President's Club. Territory wins at all-hands. A culture of excellence starts with celebrating it loudly.</p></div>
+      <div class="cult" style="border-top:2px solid var(--pk)"><div class="culth"><span class="cico" style="color:var(--pk)">◐</span><span class="cnm">Build Career Paths</span></div><p class="cdesc">Every rep has a growth roadmap: BD Specialist → Regional Director → VP. Retention starts on Day 1.</p></div>
+      <div class="cult" style="border-top:2px solid var(--v)"><div class="culth"><span class="cico" style="color:var(--v)">◇</span><span class="cnm">Data-Driven Accountability</span></div><p class="cdesc">Quotas are fair, transparent, and tied to market size. Underperformance addressed early — with support.</p></div>
+    </div>
+  </div>
+  <div class="card" style="border-top:2px solid var(--b);margin-bottom:22px">
+    <div class="ctit" style="color:var(--b)">Near-Term Hiring Priorities</div>
+    <div class="hire-grid">
+      <div class="hire"><div class="hiret"><div class="hiren">5 Regional BD Directors</div><div class="hirew" style="color:var(--t);background:rgba(0,201,167,.12);border:1px solid rgba(0,201,167,.3)">Q3 2025</div></div><p class="hired">One per region (NE, SE, MW, SW, West). Own territory P&L. Experienced in SNF/LTC facility sales.</p></div>
+      <div class="hire"><div class="hiret"><div class="hiren">12 → 35 BD Specialists</div><div class="hirew" style="color:var(--b);background:rgba(79,142,247,.12);border:1px solid rgba(79,142,247,.3)">Through 2026</div></div><p class="hired">Front-line facility partnership reps. Target: former SNF operators, managed care sales, healthcare staffing BDs.</p></div>
+      <div class="hire"><div class="hiret"><div class="hiren">3 Partnership Dev. Mgrs</div><div class="hirew" style="color:var(--g);background:rgba(232,184,75,.12);border:1px solid rgba(232,184,75,.3)">Q4 2025</div></div><p class="hired">Dedicated to hospital systems, MA plans, ACO REACH. Enterprise-level relationship sellers.</p></div>
+      <div class="hire"><div class="hiret"><div class="hiren">1 Sales Ops Manager</div><div class="hirew" style="color:var(--pk);background:rgba(224,92,151,.12);border:1px solid rgba(224,92,151,.3)">Immediate</div></div><p class="hired">CRM infrastructure, quota modeling, compensation design, and pipeline reporting.</p></div>
+      <div class="hire"><div class="hiret"><div class="hiren">8 Clinical BD Specialists</div><div class="hirew" style="color:var(--v);background:rgba(155,114,247,.12);border:1px solid rgba(155,114,247,.3)">Through 2026</div></div><p class="hired">Hybrid clinical/commercial role — upsell existing facilities on additional specialty lines.</p></div>
+    </div>
+  </div>
+  <div style="background:linear-gradient(135deg,#0a2040,#060d18);border:1px solid var(--br);border-radius:12px;padding:22px 28px">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;color:var(--g);margin-bottom:14px">COMPENSATION &amp; INCENTIVE PHILOSOPHY</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px">
+      <div style="border-left:2px solid var(--t);padding-left:12px"><div style="font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--t);margin-bottom:4px;letter-spacing:.07em">BASE + VARIABLE SPLIT</div><div style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;color:var(--tx);margin-bottom:4px">60/40</div><p style="font-size:11px;color:var(--mu);line-height:1.5">Competitive base; meaningful variable tied to facility signings and occupancy growth.</p></div>
+      <div style="border-left:2px solid var(--b);padding-left:12px"><div style="font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--b);margin-bottom:4px;letter-spacing:.07em">QUOTA ACCELERATORS</div><div style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;color:var(--tx);margin-bottom:4px">1.5×–2×</div><p style="font-size:11px;color:var(--mu);line-height:1.5">Reps who exceed quota earn accelerated commission rates — exponential upside for top performers.</p></div>
+      <div style="border-left:2px solid var(--g);padding-left:12px"><div style="font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--g);margin-bottom:4px;letter-spacing:.07em">PRESIDENT'S CLUB</div><div style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;color:var(--tx);margin-bottom:4px">Top 15%</div><p style="font-size:11px;color:var(--mu);line-height:1.5">Annual recognition trip. A culture of excellence starts with celebrating it loudly.</p></div>
+      <div style="border-left:2px solid var(--v);padding-left:12px"><div style="font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--v);margin-bottom:4px;letter-spacing:.07em">TENURE EQUITY PROGRAM</div><div style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;color:var(--tx);margin-bottom:4px">Year 2+</div><p style="font-size:11px;color:var(--mu);line-height:1.5">Long-term incentive builds an ownership mentality and drives 65%→85%+ retention.</p></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ═══ DASHBOARD ═══ -->
+<div id="pg-dash" class="pg" style="padding-top:58px">
+<div class="wrap">
+  <div class="ey">Live KPI Dashboard</div>
+  <h2>CRM-Connected Performance Command Center</h2>
+  <p class="sub">Every metric tied to a CRM data source. Every decision anchored to ROI. Full visibility from pipeline health and rep performance to facility outcomes and investment returns.</p>
+  <div class="sync-bar">
+    <div style="display:flex;align-items:center;gap:8px"><div class="sdot"></div><span class="slbl">CRM SYNC: LIVE</span><span class="ssrc">PointClickCare · Salesforce · MatrixCare · Net Health</span></div>
+    <div class="smeta"><div class="si"><div class="sl">LAST SYNC</div><div class="sv">2 min ago</div></div><div class="si"><div class="sl">DATA SOURCES</div><div class="sv">6 connected</div></div><div class="si"><div class="sl">FACILITIES</div><div class="sv">360+ tracked</div></div></div>
+  </div>
+  <div class="metgrid">
+    <div class="met"><div class="mbar" style="background:var(--t)"></div><div class="mlbl">PIPELINE VALUE</div><div class="mval">$47.2M</div><div class="mch" style="color:var(--t)">+18%</div><div class="msub">vs. prior quarter</div></div>
+    <div class="met"><div class="mbar" style="background:var(--b)"></div><div class="mlbl">FACILITIES IN PIPELINE</div><div class="mval">312</div><div class="mch" style="color:var(--b)">+34</div><div class="msub">net new this quarter</div></div>
+    <div class="met"><div class="mbar" style="background:var(--g)"></div><div class="mlbl">AVG DEAL SIZE (ARR)</div><div class="mval">$347K</div><div class="mch" style="color:var(--g)">+$22K</div><div class="msub">vs. Q3 baseline</div></div>
+    <div class="met"><div class="mbar" style="background:var(--t)"></div><div class="mlbl">WIN RATE</div><div class="mval">34%</div><div class="mch" style="color:var(--t)">+6pts</div><div class="msub">proposals → closed</div></div>
+    <div class="met"><div class="mbar" style="background:var(--pk)"></div><div class="mlbl">AVG SALES CYCLE</div><div class="mval">54 days</div><div class="mch" style="color:var(--pk)">–6 days</div><div class="msub">vs. 60-day baseline</div></div>
+    <div class="met"><div class="mbar" style="background:var(--v)"></div><div class="mlbl">LTV:CAC RATIO</div><div class="mval">41×</div><div class="mch" style="color:var(--v)">+4pts</div><div class="msub">healthy threshold: &gt;10×</div></div>
+    <div class="met"><div class="mbar" style="background:var(--b)"></div><div class="mlbl">CAC PER FACILITY</div><div class="mval">$8,400</div><div class="mch" style="color:var(--b)">–$1,100</div><div class="msub">efficiency improving</div></div>
+    <div class="met"><div class="mbar" style="background:var(--t)"></div><div class="mlbl">QUOTA ATTAINMENT</div><div class="mval">61%</div><div class="mch" style="color:var(--t)">+6pts</div><div class="msub">team avg this quarter</div></div>
+  </div>
+  <div class="g2" style="margin-bottom:22px">
+    <div class="card" style="border-top:2px solid var(--t)"><div class="ctit" style="color:var(--t)">Monthly Revenue vs. Target ($M)</div><div style="position:relative;height:200px"><canvas id="revChart"></canvas></div></div>
+    <div class="card" style="border-top:2px solid var(--b)"><div class="ctit" style="color:var(--b)">Pipeline Funnel — Facilities by Stage</div><div style="position:relative;height:200px"><canvas id="pipeChart"></canvas></div></div>
+  </div>
+  <div class="card" style="border-top:2px solid var(--g);margin-bottom:22px">
+    <div class="ctit" style="color:var(--g)">ROI Decision Framework — Every Initiative Justified</div>
+    <div class="roi-note"><span>CGO Standard: </span>No investment approved without a documented ROI projection, payback period, and CRM-tracked revenue attribution. Minimum threshold: 3× ROI within 24 months.</div>
+    <div style="overflow-x:auto"><table><thead><tr><th>Decision</th><th>Cost</th><th>Revenue Impact</th><th>ROI</th><th>Payback</th><th>Priority</th></tr></thead><tbody id="roi-el"></tbody></table></div>
+  </div>
+  <div class="card" style="border-top:2px solid var(--v)">
+    <div class="ctit" style="color:var(--v)">Full KPI Target Framework — 2025 → 2029</div>
+    <div style="overflow-x:auto"><table><thead><tr><th>KPI</th><th>Category</th><th>CRM Source</th><th>2025</th><th>2027</th><th>2029</th></tr></thead><tbody>
+      <tr><td style="font-weight:600;color:var(--tx)">Net Revenue</td><td style="color:var(--b);font-family:'JetBrains Mono',monospace;font-size:9px">Financial</td><td style="color:#4a6080;font-size:10px">Salesforce → QB</td><td>$125M</td><td>$215M</td><td style="color:var(--t);font-weight:700">$365M</td></tr>
+      <tr><td style="font-weight:600;color:var(--tx)">EBITDA Margin</td><td style="color:var(--b);font-family:'JetBrains Mono',monospace;font-size:9px">Financial</td><td style="color:#4a6080;font-size:10px">QB / Finance</td><td>11%</td><td>17%</td><td style="color:var(--t);font-weight:700">22%</td></tr>
+      <tr><td style="font-weight:600;color:var(--tx)">Active Facilities</td><td style="color:var(--b);font-family:'JetBrains Mono',monospace;font-size:9px">Operational</td><td style="color:#4a6080;font-size:10px">PointClickCare</td><td>360+</td><td>620</td><td style="color:var(--t);font-weight:700">1,000+</td></tr>
+      <tr><td style="font-weight:600;color:var(--tx)">Pipeline Value</td><td style="color:var(--b);font-family:'JetBrains Mono',monospace;font-size:9px">Commercial</td><td style="color:#4a6080;font-size:10px">Salesforce</td><td>$38M</td><td>$85M</td><td style="color:var(--t);font-weight:700">$160M+</td></tr>
+      <tr><td style="font-weight:600;color:var(--tx)">Win Rate</td><td style="color:var(--b);font-family:'JetBrains Mono',monospace;font-size:9px">Sales</td><td style="color:#4a6080;font-size:10px">Salesforce</td><td>34%</td><td>42%</td><td style="color:var(--t);font-weight:700">50%</td></tr>
+      <tr><td style="font-weight:600;color:var(--tx)">LTV:CAC Ratio</td><td style="color:var(--b);font-family:'JetBrains Mono',monospace;font-size:9px">Sales</td><td style="color:#4a6080;font-size:10px">Salesforce + QB</td><td>41×</td><td>52×</td><td style="color:var(--t);font-weight:700">70×</td></tr>
+      <tr><td style="font-weight:600;color:var(--tx)">30-Day Readmission Δ</td><td style="color:var(--b);font-family:'JetBrains Mono',monospace;font-size:9px">Quality</td><td style="color:#4a6080;font-size:10px">PointClickCare</td><td>Baseline</td><td>–13%</td><td style="color:var(--t);font-weight:700">–20%</td></tr>
+      <tr><td style="font-weight:600;color:var(--tx)">Facility NPS</td><td style="color:var(--b);font-family:'JetBrains Mono',monospace;font-size:9px">Relationship</td><td style="color:#4a6080;font-size:10px">Survey → CRM</td><td>64</td><td>73</td><td style="color:var(--t);font-weight:700">78</td></tr>
+    </tbody></table></div>
+  </div>
+</div>
+</div>
+
+<!-- ═══ LIVE M&A ═══ -->
+<div id="pg-acq" class="pg" style="padding-top:58px">
+<div class="wrap">
+  <div class="ey">Strategic Acquisitions — Live Market Intelligence</div>
+  <h2>Current Targets &amp; Active Deal Flow</h2>
+  <p class="sub">Real-time acquisition intelligence sourced from active M&A deal flow, broker listings, and market signals as of April 2026. Each target evaluated against MedElite's clinical, geographic, and ROI criteria.</p>
+  <div class="pulse-bar">
+    <div style="display:flex;align-items:center;gap:8px"><div class="pdot"></div><span class="plbl">DEAL MARKET: HIGHLY ACTIVE</span></div>
+    <div class="pstats">
+      <div class="pi"><div class="pl">Q1 2026 TRANSACTIONS</div><div class="pv">22 announced — highest Q1 in 5 years</div></div>
+      <div class="pi"><div class="pl">HOSPICE M&A Q4 2025</div><div class="pv">Record 16 deals — 10-yr high</div></div>
+      <div class="pi"><div class="pl">HOME HEALTH OUTLOOK</div><div class="pv">Buyers re-entering after CMS rate clarity</div></div>
+    </div>
+  </div>
+  <div class="card" style="border-top:2px solid var(--t);margin-bottom:22px">
+    <div class="ctit" style="color:var(--t)">Tier 1 — Immediate Opportunities (Active Deal Flow)</div>
+    <div style="font-size:10px;color:var(--mu);margin-bottom:16px;padding:8px 12px;background:rgba(0,201,167,.05);border:1px solid rgba(0,201,167,.18);border-radius:6px">These transactions are currently in active market processes. MedElite should engage advisors within 90 days.</div>
+    <div id="tier1-el"></div>
+  </div>
+  <div class="card" style="border-top:2px solid var(--b);margin-bottom:22px">
+    <div class="ctit" style="color:var(--b)">Tier 2 — Strategic Watch List (12–18 Month Horizon)</div>
+    <div style="font-size:10px;color:var(--mu);margin-bottom:16px;padding:8px 12px;background:rgba(79,142,247,.05);border:1px solid rgba(79,142,247,.18);border-radius:6px">Active market segments with deal flow and aging PE platforms aligning with MedElite's clinical expansion priorities. Begin relationship-building now.</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:12px" id="watch-el"></div>
+  </div>
+  <div class="card" style="border-top:2px solid var(--g);margin-bottom:22px">
+    <div class="ctit" style="color:var(--g)">M&A Valuation Benchmarks — Post-Acute Sector</div>
+    <div style="overflow-x:auto"><table><thead><tr><th>Asset Type</th><th>EBITDA Multiple</th><th>Rev. Multiple</th><th>Market Signal</th><th>MedElite Relevance</th></tr></thead><tbody>
+      <tr><td style="font-weight:600;color:var(--tx)">SNF Portfolio (CON states)</td><td style="color:var(--g);font-weight:700">11×–14×</td><td style="color:var(--b)">1.2×–1.5× rev</td><td style="font-size:10px">Stable; institutional buyer demand high</td><td style="font-size:10px;color:#c5d5e8">New operator = clinical contract opportunity</td></tr>
+      <tr><td style="font-weight:600;color:var(--tx)">SNF Portfolio (non-CON)</td><td style="color:var(--g);font-weight:700">8×–10×</td><td style="color:var(--b)">0.9×–1.1× rev</td><td style="font-size:10px">Active; PE and regional operators buying</td><td style="font-size:10px;color:#c5d5e8">Same — engage incoming operators</td></tr>
+      <tr><td style="font-weight:600;color:var(--tx)">Home Health Platform</td><td style="color:var(--g);font-weight:700">10×–12×</td><td style="color:var(--b)">0.8×–1.0× rev</td><td style="font-size:10px">PE recapitalization cycle accelerating</td><td style="font-size:10px;color:#c5d5e8">PDGM extension of treat-in-place model</td></tr>
+      <tr><td style="font-weight:600;color:var(--tx)">Hospice Platform</td><td style="color:var(--g);font-weight:700">10×–13×</td><td style="color:var(--b)">1.0×–1.3× rev</td><td style="font-size:10px">Record deal volume Q4 2025 (16 deals)</td><td style="font-size:10px;color:#c5d5e8">Palliative/hospice = existing MedElite line</td></tr>
+      <tr><td style="font-weight:600;color:var(--tx)">Specialty Practice Group</td><td style="color:var(--g);font-weight:700">5×–8×</td><td style="color:var(--b)">0.6×–0.9× rev</td><td style="font-size:10px">Fragmented; boutique brokers active</td><td style="font-size:10px;color:#c5d5e8">Direct add to MedElite's 16 specialty lines</td></tr>
+      <tr><td style="font-weight:600;color:var(--tx)">LTC Health IT / Analytics</td><td style="color:var(--g);font-weight:700">8×–15×</td><td style="color:var(--b)">3×–6× rev</td><td style="font-size:10px">PE interest high; AI premium emerging</td><td style="font-size:10px;color:#c5d5e8">Accelerates MedElite Analytics™ buildout</td></tr>
+    </tbody></table></div>
+    <div class="valsource">Sources: Sherman &amp; Roylance SNF Guide 2025 · Mertz Taggart Q4 2025 Home-Based Care M&A Report · Kaufman Hall Q1 2026 · Skilled Nursing News Deal Tracker · Jefferies LLC Enhabit Analysis Feb 2026</div>
+  </div>
+  <div class="action-dark">
+    <div class="albl">CGO M&A ACTION PLAN — NEXT 90 DAYS</div>
+    <div class="agrid" id="action-el"></div>
+  </div>
+</div>
+</div>
+
+<!-- ═══ PILLARS ═══ -->
+<div id="pg-pillars" class="pg" style="padding-top:58px">
+<div class="wrap">
+  <div class="ey">Growth Strategy</div>
+  <h2>Four Vectors, One Mission</h2>
+  <p class="sub">MedElite's growth engine compounds across four coordinated vectors — each building on the 37-state footprint, 16-specialty clinical depth, and the CGO's mandate to increase revenue, occupancy, and market presence.</p>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(245px,1fr));gap:16px;margin-bottom:26px">
+    <div class="card" style="border-top:2px solid var(--t)"><div style="font-size:24px;color:var(--t);margin-bottom:10px">◆</div><div style="font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:700;margin-bottom:14px;color:var(--tx)">Core Growth</div><ul style="list-style:none;padding:0;margin:0"><li style="font-size:11px;color:var(--su);padding:6px 0;border-bottom:1px solid #0d1f30;display:flex;gap:7px"><span style="color:var(--t)">›</span>Expand from 37→50 states; finalize remaining 13 markets</li><li style="font-size:11px;color:var(--su);padding:6px 0;border-bottom:1px solid #0d1f30;display:flex;gap:7px"><span style="color:var(--t)">›</span>Deepen specialty penetration: target 5+ lines per facility</li><li style="font-size:11px;color:var(--su);padding:6px 0;border-bottom:1px solid #0d1f30;display:flex;gap:7px"><span style="color:var(--t)">›</span>Scale Care Management Program across all partner facilities</li><li style="font-size:11px;color:var(--su);padding:6px 0;display:flex;gap:7px"><span style="color:var(--t)">›</span>Bundled multi-specialty contracts to grow revenue per facility</li></ul></div>
+    <div class="card" style="border-top:2px solid var(--b)"><div style="font-size:24px;color:var(--b);margin-bottom:10px">◈</div><div style="font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:700;margin-bottom:14px;color:var(--tx)">Strategic Partnerships</div><ul style="list-style:none;padding:0;margin:0"><li style="font-size:11px;color:var(--su);padding:6px 0;border-bottom:1px solid #0d1f30;display:flex;gap:7px"><span style="color:var(--b)">›</span>ACO REACH alignment — SNF value-based care network</li><li style="font-size:11px;color:var(--su);padding:6px 0;border-bottom:1px solid #0d1f30;display:flex;gap:7px"><span style="color:var(--b)">›</span>Regional hospital systems: post-acute referral agreements</li><li style="font-size:11px;color:var(--su);padding:6px 0;border-bottom:1px solid #0d1f30;display:flex;gap:7px"><span style="color:var(--b)">›</span>Medicare Advantage &amp; Medicaid MCO preferred network status</li><li style="font-size:11px;color:var(--su);padding:6px 0;display:flex;gap:7px"><span style="color:var(--b)">›</span>EHR integrations: PointClickCare, MatrixCare, Net Health</li></ul></div>
+    <div class="card" style="border-top:2px solid var(--g)"><div style="font-size:24px;color:var(--g);margin-bottom:10px">◉</div><div style="font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:700;margin-bottom:14px;color:var(--tx)">Acquisition Targets</div><ul style="list-style:none;padding:0;margin:0"><li style="font-size:11px;color:var(--su);padding:6px 0;border-bottom:1px solid #0d1f30;display:flex;gap:7px"><span style="color:var(--g)">›</span>Specialty practices with existing SNF facility relationships</li><li style="font-size:11px;color:var(--su);padding:6px 0;border-bottom:1px solid #0d1f30;display:flex;gap:7px"><span style="color:var(--g)">›</span>Regional care management platforms with SNF operator base</li><li style="font-size:11px;color:var(--su);padding:6px 0;border-bottom:1px solid #0d1f30;display:flex;gap:7px"><span style="color:var(--g)">›</span>Telehealth companies with LTC-focused infrastructure</li><li style="font-size:11px;color:var(--su);padding:6px 0;display:flex;gap:7px"><span style="color:var(--g)">›</span>Home health agencies to extend continuum-of-care</li></ul></div>
+    <div class="card" style="border-top:2px solid var(--pk)"><div style="font-size:24px;color:var(--pk);margin-bottom:10px">◐</div><div style="font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:700;margin-bottom:14px;color:var(--tx)">New Business Lines</div><ul style="list-style:none;padding:0;margin:0"><li style="font-size:11px;color:var(--su);padding:6px 0;border-bottom:1px solid #0d1f30;display:flex;gap:7px"><span style="color:var(--pk)">›</span>MedElite Analytics™ — AI outcomes &amp; staffing platform</li><li style="font-size:11px;color:var(--su);padding:6px 0;border-bottom:1px solid #0d1f30;display:flex;gap:7px"><span style="color:var(--pk)">›</span>Advanced Wound Care (adjacent to existing Dermatology)</li><li style="font-size:11px;color:var(--su);padding:6px 0;border-bottom:1px solid #0d1f30;display:flex;gap:7px"><span style="color:var(--pk)">›</span>Transitions of Care SaaS: hospital-to-SNF coordination</li><li style="font-size:11px;color:var(--su);padding:6px 0;display:flex;gap:7px"><span style="color:var(--pk)">›</span>MedElite Academy — CME/CEU training for SNF staff</li></ul></div>
+  </div>
+  <div class="card" style="border-top:2px solid var(--b);margin-bottom:22px">
+    <div class="ctit" style="color:var(--b)">Strategic Partnerships Blueprint</div>
+    <div class="partner-grid">
+      <div class="ptnr"><div class="pbdgw" style="background:rgba(79,142,247,.12);color:var(--b);border:1px solid rgba(79,142,247,.3)">Referral Pipeline</div><div class="pnm">Hospital Systems</div><p class="pdsc">Bilateral post-acute referral agreements; JOC protocols to optimize discharge-to-SNF flow across MedElite's 37-state network.</p></div>
+      <div class="ptnr"><div class="pbdgw" style="background:rgba(0,201,167,.12);color:var(--t);border:1px solid rgba(0,201,167,.3)">Revenue Risk-Share</div><div class="pnm">Medicare Advantage Plans</div><p class="pdsc">Value-based care contracts; CMS STARS quality metric alignment; SNF preferred network inclusion to drive volume and shared savings.</p></div>
+      <div class="ptnr"><div class="pbdgw" style="background:rgba(155,114,247,.12);color:var(--v);border:1px solid rgba(155,114,247,.3)">Value-Based Care</div><div class="pnm">ACO REACH</div><p class="pdsc">SNF-focused ACO participation to capture shared savings on complex chronic patients under MedElite's Care Management Program.</p></div>
+      <div class="ptnr"><div class="pbdgw" style="background:rgba(232,184,75,.12);color:var(--g);border:1px solid rgba(232,184,75,.3)">Technology Moat</div><div class="pnm">EHR / Health IT</div><p class="pdsc">Deep integrations with PointClickCare, MatrixCare, and Net Health; automated referral workflows and real-time clinical data exchange.</p></div>
+      <div class="ptnr"><div class="pbdgw" style="background:rgba(224,92,151,.12);color:var(--pk);border:1px solid rgba(224,92,151,.3)">Brand Authority</div><div class="pnm">Academic Medical Centers</div><p class="pdsc">Clinical research collaboration, GME training site affiliation, and outcomes data validation to strengthen MedElite's evidence base.</p></div>
+      <div class="ptnr"><div class="pbdgw" style="background:rgba(79,204,224,.12);color:#4fcce0;border:1px solid rgba(79,204,224,.3)">Market Access</div><div class="pnm">State LTC Associations</div><p class="pdsc">AHCA/NCAL and state SNF associations — policy advocacy, regulatory intelligence, and facility pipeline development across 37+ states.</p></div>
+    </div>
+  </div>
+  <div class="card" style="border-top:2px solid var(--pk)">
+    <div class="ctit" style="color:var(--pk)">New Synergistic Business Lines</div>
+    <div class="nl-grid">
+      <div class="nlc"><div class="nlct"><span class="nlci" style="color:var(--pk)">◈</span><span class="nlce">$15M–$25M ARR</span></div><div class="nlcn">MedElite Analytics™</div><p class="nlcd">AI-powered outcomes platform: CMS star predictor, staffing optimizer, rehospitalization risk engine — deployable across 360+ facilities then licensed externally.</p></div>
+      <div class="nlc"><div class="nlct"><span class="nlci" style="color:var(--pk)">◆</span><span class="nlce">$10M–$18M revenue</span></div><div class="nlcn">Advanced Wound Care</div><p class="nlcd">Dedicated wound care program adjacent to MedElite's existing Dermatology line — one of the highest unmet needs in SNFs with strong PDPM reimbursement.</p></div>
+      <div class="nlc"><div class="nlct"><span class="nlci" style="color:var(--pk)">◉</span><span class="nlce">$10M–$18M ARR</span></div><div class="nlcn">Transitions of Care SaaS</div><p class="nlcd">Hospital-to-SNF coordination platform: discharge workflow automation, care-gap alerts, 30-day follow-up protocols. Licensed to hospital system partners.</p></div>
+      <div class="nlc"><div class="nlct"><span class="nlci" style="color:var(--pk)">◐</span><span class="nlce">$5M–$12M ARR</span></div><div class="nlcn">MedElite Academy</div><p class="nlcd">CME/CEU platform for SNF clinical staff aligned with MedElite's Education pillar. NP protocols, physician modules, DOH compliance certifications.</p></div>
+      <div class="nlc"><div class="nlct"><span class="nlci" style="color:var(--pk)">◇</span><span class="nlce">$6M–$10M potential</span></div><div class="nlcn">QAPI-as-a-Service</div><p class="nlcd">White-label DOH survey preparedness and QAPI program management sold to non-partner SNFs — turns a core pillar into a standalone revenue stream.</p></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ═══ ROADMAP ═══ -->
+<div id="pg-road" class="pg" style="padding-top:58px">
+<div class="wrap">
+  <div class="ey">Strategic Roadmap</div>
+  <h2>Three-Phase Execution Plan</h2>
+  <p class="sub">Built on MedElite's 37-state foundation, this roadmap phases growth from national completion through platform leadership — directly tied to the CGO's mandate to increase revenue, occupancy, and market presence.</p>
+  <div class="card" style="border-top:2px solid var(--t);margin-bottom:22px">
+    <div class="ctit" style="color:var(--t)">Revenue Trajectory ($M) — 2025–2029</div>
+    <div style="position:relative;height:200px"><canvas id="roadChart"></canvas></div>
+  </div>
+  <div class="phase-card"><div class="ph" style="background:linear-gradient(90deg,rgba(0,201,167,.1),transparent);border-bottom:1px solid rgba(0,201,167,.2)"><div class="pnum" style="background:rgba(0,201,167,.12);border:2px solid var(--t);color:var(--t)">1</div><div><div class="ptag" style="color:var(--t)">Phase I · 2025–2026</div><div class="pname">National Completion</div></div></div><div class="pb"><div class="ms"><div class="msdot" style="background:var(--t)"></div><div class="mstxt">Reach all 50 states — add final 13 markets</div></div><div class="ms"><div class="msdot" style="background:var(--t)"></div><div class="mstxt">Scale to 500+ active facility partnerships</div></div><div class="ms"><div class="msdot" style="background:var(--t)"></div><div class="mstxt">Deepen to avg. 4+ specialties per facility</div></div><div class="ms"><div class="msdot" style="background:var(--t)"></div><div class="mstxt">Sign first Medicare Advantage value-based contract</div></div><div class="ms"><div class="msdot" style="background:var(--t)"></div><div class="mstxt">Close 2 tuck-in specialty group acquisitions</div></div></div></div>
+  <div class="phase-card"><div class="ph" style="background:linear-gradient(90deg,rgba(79,142,247,.1),transparent);border-bottom:1px solid rgba(79,142,247,.2)"><div class="pnum" style="background:rgba(79,142,247,.12);border:2px solid var(--b);color:var(--b)">2</div><div><div class="ptag" style="color:var(--b)">Phase II · 2026–2027</div><div class="pname">Platform Acceleration</div></div></div><div class="pb"><div class="ms"><div class="msdot" style="background:var(--b)"></div><div class="mstxt">Launch MedElite Analytics™ MVP to partner facilities</div></div><div class="ms"><div class="msdot" style="background:var(--b)"></div><div class="mstxt">Formalize ACO REACH network with 3+ health system MSAs</div></div><div class="ms"><div class="msdot" style="background:var(--b)"></div><div class="mstxt">Acquire regional care management or telehealth platform</div></div><div class="ms"><div class="msdot" style="background:var(--b)"></div><div class="mstxt">Add 2–3 new specialty lines (wound care, sleep, rheumatology)</div></div><div class="ms"><div class="msdot" style="background:var(--b)"></div><div class="mstxt">Target $215M ARR</div></div></div></div>
+  <div class="phase-card" style="margin-bottom:22px"><div class="ph" style="background:linear-gradient(90deg,rgba(224,92,151,.1),transparent);border-bottom:1px solid rgba(224,92,151,.2)"><div class="pnum" style="background:rgba(224,92,151,.12);border:2px solid var(--pk);color:var(--pk)">3</div><div><div class="ptag" style="color:var(--pk)">Phase III · 2027–2029</div><div class="pname">Market Leadership</div></div></div><div class="pb"><div class="ms"><div class="msdot" style="background:var(--pk)"></div><div class="mstxt">1,000+ facilities under management — dominant national scale</div></div><div class="ms"><div class="msdot" style="background:var(--pk)"></div><div class="mstxt">MedElite Analytics™ licensed to 3rd-party SNF operators</div></div><div class="ms"><div class="msdot" style="background:var(--pk)"></div><div class="mstxt">MedElite Academy generating standalone SaaS revenue</div></div><div class="ms"><div class="msdot" style="background:var(--pk)"></div><div class="mstxt">IPO readiness assessment or institutional recap process</div></div><div class="ms"><div class="msdot" style="background:var(--pk)"></div><div class="mstxt">Target $365M+ ARR</div></div></div></div>
+  <div class="card" style="border-top:2px solid var(--v);margin-bottom:22px">
+    <div class="ctit" style="color:var(--v)">Capital &amp; Investment Requirements</div>
+    <div class="cap-grid">
+      <div class="cap"><div class="capl" style="color:var(--t)">NATIONAL COMPLETION (13 STATES)</div><div class="capv">$15M–$22M</div><p class="capd">Licensing, clinical hiring, equipment deployment in remaining markets</p></div>
+      <div class="cap"><div class="capl" style="color:var(--b)">TECHNOLOGY PLATFORM</div><div class="capv">$12M–$20M</div><p class="capd">MedElite Analytics™ build-out, EHR integrations, cybersecurity infrastructure</p></div>
+      <div class="cap"><div class="capl" style="color:var(--g)">M&amp;A BUDGET</div><div class="capv">$40M–$100M</div><p class="capd">2–4 strategic acquisitions: specialty groups, SaaS platforms, telehealth</p></div>
+      <div class="cap"><div class="capl" style="color:var(--pk)">SALES &amp; BUSINESS DEV.</div><div class="capv">$8M–$14M</div><p class="capd">Business development team, health plan contracting, national marketing</p></div>
+      <div class="cap"><div class="capl" style="color:var(--v)">CLINICAL QUALITY &amp; COMPLIANCE</div><div class="capv">$5M–$10M</div><p class="capd">Outcomes infrastructure, QAPI, accreditation, CMS compliance systems</p></div>
+    </div>
+  </div>
+  <div class="thesis"><div class="thlbl">CGO GROWTH THESIS</div><p class="thq">"MedElite Group has achieved what few healthcare services companies accomplish — a 37-state footprint, 16 specialty lines, and a proven treat-in-place model that measurably reduces hospitalization, pharmacy costs, and patient transport. The next chapter is not about proving the model. It's about owning the market."</p><div class="thatr">— Chief Growth Officer, MedElite Group · 2025</div></div>
+</div>
+</div>
+
+<script>
+var CB={};
+function goPg(id){
+  document.querySelectorAll('.pg').forEach(function(p){p.classList.remove('on')});
+  document.querySelectorAll('nav .nl button').forEach(function(b){b.classList.remove('on')});
+  var pg=document.getElementById('pg-'+id);
+  if(pg)pg.classList.add('on');
+  var nb=document.getElementById('nb-'+id);
+  if(nb)nb.classList.add('on');
+  window.scrollTo(0,0);
+  if(id==='dash'&&!CB.dash)buildDash();
+  if(id==='road'&&!CB.road)buildRoad();
+}
+var quals=[
+  {icon:'◆',c:'#00C9A7',q:'Extensive National SNF / Post-Acute Leadership',v:'"Extensive national leadership experience within nursing homes, Skilled Nursing Facilities (SNF), and post-acute care networks."',ctx:"MedElite operates in 37 states with 360+ facility partnerships. This role requires someone who has led at that scale — or built toward it."},
+  {icon:'◈',c:'#4F8EF7',q:'Revenue Growth & Clinical Service Sales',v:'"Proven track record of driving revenue growth, clinical service sales, and strategic partnerships with private and corporate healthcare providers."',ctx:"The CGO will own MedElite's commercial engine — scaling from $125M toward $365M ARR through specialty line expansion and new facility partnerships."},
+  {icon:'◉',c:'#E8B84B',q:'Commercial Acumen & Market Expansion',v:'"Strong commercial acumen with consistent success in exceeding revenue, occupancy, and market expansion targets."',ctx:"Revenue, occupancy, and market expansion are MedElite's three core commercial levers. The CGO must have a documented history of exceeding targets on all three."}
+];
+var resps=[
+  {icon:'◆',c:'#00C9A7',nm:'Lead the National Growth Strategy',v:'"Lead the national growth strategy to increase revenue, occupancy, and market presence."',exec:["Define and own MedElite's path from 37→50 states with a market-by-market entry playbook","Set revenue, occupancy, and facility partnership targets for each region and specialty line","Serve as primary growth voice to CEO, Board, and investors — reporting on pipeline and market KPIs"]},
+  {icon:'◈',c:'#4F8EF7',nm:'Build & Manage Strategic Healthcare Partnerships',v:'"Build and manage strategic healthcare and referral partnerships across the post-acute care ecosystem."',exec:["Establish hospital system referral agreements to drive SNF census and occupancy growth","Build Medicare Advantage preferred network and ACO REACH relationships across all active states","Represent MedElite at AHCA/NCAL and national post-acute care forums"]},
+  {icon:'◉',c:'#E8B84B',nm:'Oversee Commercial Performance & Pipeline',v:'"Oversee commercial performance, pipeline management, and market positioning to drive scalable growth."',exec:["Own the full commercial pipeline from prospect to signed facility partnership across 37+ states","Lead and scale the Partner Acquisition and Clinical Business Development teams","Drive market positioning that differentiates MedElite's treat-in-place model vs. all competitors"]},
+  {icon:'◇',c:'#9B72F7',nm:'Build, Inspire & Manage the Sales Team',v:'"Manage, inspire, measure, and build MedElite\'s national sales organization."',exec:["Recruit, structure, and scale a high-performance Partner Acquisition and BD team across all 37+ active states","Build a coaching culture — weekly 1:1s, ride-alongs, real-time pipeline reviews, and performance feedback loops","Create career paths, incentive structures, and recognition programs that retain top commercial talent"]}
+];
+var qwins=[
+  {period:'Days 1–30',c:'#00C9A7',items:["Audit all 37 active state markets — identify top 20 expansion-ready facilities","Meet every member of the Partner Acquisition & BD teams — 1:1s with all reps","Review full commercial pipeline, CRM hygiene, and quota attainment data","Map priority health system referral targets by state"]},
+  {period:'Days 31–60',c:'#4F8EF7',items:["Launch outreach to 3 priority hospital system referral partners","Post and begin interviewing for Sales Ops Manager and 2 Regional BD Directors","Draft 50-state expansion sequencing plan for CEO/Board","Initiate first rep coaching sessions; establish weekly pipeline review cadence"]},
+  {period:'Days 61–90',c:'#E8B84B',items:["Close first new facility partnership cohort (10+ facilities)","Present sales org redesign and hiring plan to CEO","Finalize comp plan redesign with accelerators and President's Club criteria","Submit first 90-day commercial performance report with team scorecard"]}
+];
+var orgData=[
+  {role:'VP of Partner Acquisition',rep:'CGO',scope:'Oversees all national facility BD reps; owns pipeline targets and regional territory strategy',kpi:'New facility partnerships / quarter',c:'#00C9A7'},
+  {role:'Regional BD Directors (×5)',rep:'VP Partner Acquisition',scope:'NE, SE, Midwest, SW, West — each owns a 7–10 state territory and a team of reps',kpi:'Facilities signed + occupancy growth per region',c:'#4F8EF7'},
+  {role:'Clinical BD Specialists',rep:'Regional Directors',scope:'Specialty-line focused sellers who upsell existing facilities on new service lines',kpi:'Specialty lines added per existing facility',c:'#E8B84B'},
+  {role:'Partnership Dev. Managers',rep:'CGO',scope:'Own hospital system, MA plan, and ACO relationships; close institutional contracts',kpi:'Institutional contracts closed; referral volume',c:'#E05C97'},
+  {role:'Sales Operations Manager',rep:'CGO',scope:'CRM administration, pipeline reporting, quota modeling, and compensation plan design',kpi:'Pipeline data quality; forecast accuracy; rep ramp time',c:'#9B72F7'}
+];
+var roiD=[
+  {d:'Hire 1 Regional BD Director',c:'$185K/yr total comp',i:'$1.8M–$2.4M new facility ARR',r:'9.7×–13×',p:'<4 months',pr:'HIGH'},
+  {d:'Add Clinical BD Specialist',c:'$120K/yr total comp',i:'$540K–$720K specialty upsell ARR',r:'4.5×–6×',p:'<6 months',pr:'HIGH'},
+  {d:'CRM & Sales Ops Platform',c:'$80K impl. + $40K/yr',i:'15% pipeline conversion lift → ~$2.1M',r:'17.5×',p:'<3 months',pr:'HIGH'},
+  {d:'Enter 1 New State Market',c:'$400K–$600K',i:'$2.5M–$4M ARR at maturity',r:'4×–8×',p:'9–15 months',pr:'HIGH'},
+  {d:'MA Plan Value-Based Contract',c:'$200K legal + integration',i:'$1.5M–$3M shared savings + volume',r:'7.5×–15×',p:'12–18 months',pr:'HIGH'},
+  {d:'MedElite Analytics™ MVP',c:'$3M–$5M build',i:'$15M–$25M ARR at scale',r:'5×–8.3×',p:'24–36 months',pr:'MEDIUM'},
+  {d:"President's Club Program",c:'$150K/yr',i:'10–15% rep retention lift → ~$800K saved',r:'5.3×',p:'<12 months',pr:'MEDIUM'}
+];
+var t1=[
+  {nm:'Amedisys DOJ Divestiture Portfolio',tp:'Home Health & Hospice',st:'DIVESTED — Buyer Opportunity',sc:'#00C9A7',det:'UHG/Optum acquired Amedisys ($3.3B) and was required by DOJ to divest 164 locations across 19 states generating $528M in revenue. Comparable assets may surface in secondary markets.',sz:'Individual location packages',bd:'164 locations divested',geo:'19 states',fit:'HIGH',roi:'Strong — established census, existing referral networks, PDGM-compliant',src:'DOJ Settlement / SNF News Jan 2026',c:'#00C9A7'},
+  {nm:'New England 302-Bed SNF Portfolio',tp:'Skilled Nursing — Clinical Services Expansion',st:'ACTIVELY MARKETED',sc:'#E8B84B',det:'Blueprint Healthcare represented a PE investor divesting a 302-bed SNF portfolio in Boston MSA. $27M revenue, strong market, rate/occupancy upside. MedElite can partner with incoming operator.',sz:'$15M–$30M (est.)',bd:'302 beds',geo:'Massachusetts (Boston MSA)',fit:'MEDIUM',roi:'Rate + occupancy upside; MedElite positions as clinical partner to incoming operator',src:'Blueprint Healthcare / SeniorCare Investor Feb 2026',c:'#4F8EF7'},
+  {nm:'Connecticut 2-SNF Portfolio (301 Beds)',tp:'Skilled Nursing — Clinical Partnership Target',st:'LEASE DEAL CLOSING',sc:'#4F8EF7',det:'High-performing CT SNF portfolio (301 beds, 86% occupancy, $4.4M EBITDAR on $36M revenue). Non-union. Transacting as lease with purchase option. New operator = immediate clinical services opportunity.',sz:'$36M revenue asset',bd:'301 beds (2 facilities)',geo:'Southern/Western Connecticut',fit:'HIGH',roi:'Immediate multi-specialty contract opportunity; CT is existing MedElite state',src:'Blueprint Healthcare / SeniorCare Investor Feb 2026',c:'#00C9A7'},
+  {nm:'Enhabit Home Health & Hospice',tp:'Home Health & Hospice Platform',st:'GOING PRIVATE — Q2 2026',sc:'#9B72F7',det:'Kinderhook Industries acquiring Enhabit (249 home health + 117 hospice locations across 34 states) for $1.1B at ~10.3× EBITDA. PE ownership may create sub-portfolio divestiture opportunities or partnership openings.',sz:'$1.1B enterprise',bd:'366 locations / 34 states',geo:'34 states',fit:'MEDIUM',roi:'Monitor for sub-market divestitures; partnership opportunity where Enhabit and MedElite both operate',src:'Kinderhook/Enhabit Press Release Feb 2026',c:'#9B72F7'}
+];
+var wd=[
+  {nm:'Independent Podiatry Groups (SNF-focused)',sig:'Multiple practices actively marketed — including 20+ year podiatry practices in IL, TX, PA via Synergy Business Brokers.',sz:'$2M–$15M',why:"Podiatry is already a MedElite specialty. Acquiring groups with existing SNF contracts = instant revenue accretion with zero new clinical infrastructure.",urg:'ACT NOW — multiple listed',c:'#00C9A7'},
+  {nm:'Telehealth Behavioral Health Practice (VA/MD)',sig:'Established geri-psych & outpatient psychiatry telehealth practice with 3 locations in VA and MD actively seeking acquirer (Synergy BB listing, Apr 2026).',sz:'$5M–$20M',why:"Behavioral health is MedElite's fastest-growing specialty line. Telehealth platform extends reach to rural SNFs in the 13 remaining states.",urg:'ACTIVE LISTING',c:'#9B72F7'},
+  {nm:'LTC-Focused AI Analytics Platform',sig:'PurpleLab acquired KAID Health (AI clinical analytics) Sept 2025. Several smaller SNF analytics platforms remain independent.',sz:'$8M–$35M',why:"Accelerates MedElite Analytics™ buildout by 18–24 months. Provides proprietary data infrastructure, clinical AI models, and a pre-built SNF client base.",urg:'PIPELINE — 12 months',c:'#E8B84B'},
+  {nm:'Regional LTC Pharmacy / PBM',sig:"Walgreens healthcare subsidiaries now standalone after $10B Sycamore deal. Regional LTC pharmacy divestitures likely.",sz:'$20M–$80M',why:'Medication management is a core MedElite pillar. Owning or partnering with an LTC pharmacy captures recurring revenue and deepens facility relationships.',urg:'MONITOR — 9 months',c:'#E05C97'},
+  {nm:'SC / FL / MS SNF Portfolio Exits',sig:'181-bed SC SNF sold to NY PE firm; 120-bed FL Panhandle and 100-bed MS SNF sold to NJ operator (Forest Healthcare Properties, Mar 2026).',sz:'$5M–$25M per asset',why:'Facility ownership changes = new operator relationships = clinical services contract opportunity for MedElite.',urg:'ENGAGE NOW',c:'#00C9A7'},
+  {nm:'Residential HH&H Add-On Targets',sig:'Residential Home Health & Hospice (Graham Holdings) acquired Covenant in Feb 2026, signaling PE platform scale-up.',sz:'$10M–$40M',why:"Home health extension of MedElite's treat-in-place model. PDGM-compliant. Extends care beyond SNF walls into patient homes.",urg:'MONITOR — 6 months',c:'#4F8EF7'}
+];
+var acts=[
+  {a:'Engage Blueprint Healthcare',det:"Retain as buy-side advisor — they have active SNF and clinical services deal flow and are tracking the NE and CT portfolios.",due:'Week 1–2',c:'#00C9A7'},
+  {a:'Contact Incoming CT Operators',det:"Two CT SNF facilities transacting now. Reach out to new lessees/operators immediately to position MedElite as preferred clinical partner.",due:'Week 1–3',c:'#4F8EF7'},
+  {a:'Identify Podiatry Groups for LOI',det:"Multiple 20+ year podiatry practices with SNF relationships are actively listed. Initiate diligence on 2–3 targets aligned with existing MedElite states.",due:'Week 2–4',c:'#E8B84B'},
+  {a:'Telehealth Psych Platform',det:"Active VA/MD behavioral health telehealth practice is a direct match for MedElite's Psychiatry and Psychology lines. Engage Synergy BB immediately.",due:'Week 2–4',c:'#9B72F7'},
+  {a:'Build M&A Deal Tracker in CRM',det:"All acquisition targets logged in Salesforce with deal status, contact info, estimated size, and MedElite fit score. Sales Ops Manager owns this weekly.",due:'Week 3–5',c:'#E05C97'},
+  {a:'Enhabit Partnership Outreach',det:"As Enhabit goes private under Kinderhook, identify overlap markets and explore clinical services partnership agreement.",due:'Q2 2026',c:'#4FCCE0'}
+];
+
+function h(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+
+(function(){
+  var el=document.getElementById('quals-el');
+  quals.forEach(function(q){el.innerHTML+='<div class="resp-card"><div class="rh" style="background:'+q.c+'14;border-color:'+q.c+'30"><div class="ri" style="color:'+q.c+'">'+q.icon+'</div><div class="rn">'+q.q+'</div></div><div class="rb"><div><div class="rlbl" style="color:'+q.c+'">POSTING LANGUAGE</div><p class="rverb" style="border-color:'+q.c+'">'+q.v+'</p></div><div><div class="rlbl" style="color:#7A96B8">WHAT THIS MEANS AT MEDELITE</div><p style="font-size:11px;color:#9BB5CC;line-height:1.7">'+q.ctx+'</p></div></div></div>';});
+})();
+(function(){
+  var el=document.getElementById('resps-el');
+  resps.forEach(function(r){var li=r.exec.map(function(x){return '<li><span style="color:'+r.c+'">›</span>'+h(x)+'</li>';}).join('');el.innerHTML+='<div class="resp-card" style="margin-bottom:12px"><div class="rh" style="background:'+r.c+'14;border-color:'+r.c+'30"><div class="ri" style="color:'+r.c+'">'+r.icon+'</div><div class="rn">'+r.nm+'</div></div><div class="rb"><div><div class="rlbl" style="color:'+r.c+'">POSTING LANGUAGE</div><p class="rverb" style="border-color:'+r.c+'">'+r.v+'</p></div><div><div class="rlbl" style="color:#7A96B8">HOW WE EXECUTE AT MEDELITE</div><ul class="rexec">'+li+'</ul></div></div></div>';});
+})();
+(function(){
+  var el=document.getElementById('qw-el');
+  qwins.forEach(function(q){var li=q.items.map(function(x){return '<li><span style="color:'+q.c+'">›</span>'+h(x)+'</li>';}).join('');el.innerHTML+='<div class="qwc" style="border-top:2px solid '+q.c+'"><div class="qwp" style="color:'+q.c+'">'+q.period+'</div><ul class="qwl">'+li+'</ul></div>';});
+})();
+(function(){
+  var el=document.getElementById('org-el');
+  orgData.forEach(function(r){el.innerHTML+='<div class="org-row" style="border-left:3px solid '+r.c+'"><div><div class="orole">'+r.role+'</div><div class="orep" style="color:'+r.c+'">REPORTS TO: '+r.rep.toUpperCase()+'</div></div><div class="oscope">'+r.scope+'</div><div class="okpi" style="background:'+r.c+'14;border:1px solid '+r.c+'28"><div class="okl" style="color:'+r.c+'">PRIMARY KPI</div><div class="okv">'+r.kpi+'</div></div></div>';});
+})();
+(function(){
+  var tb=document.getElementById('roi-el');
+  roiD.forEach(function(r){var bs=r.pr==='HIGH'?'background:rgba(0,201,167,.1);border:1px solid rgba(0,201,167,.35);color:#00C9A7':'background:rgba(79,142,247,.1);border:1px solid rgba(79,142,247,.35);color:#4F8EF7';tb.innerHTML+='<tr><td style="font-weight:600;color:#EEF4FF">'+r.d+'</td><td>'+r.c+'</td><td style="color:#c5d5e8">'+r.i+'</td><td style="color:#E8B84B;font-weight:700;font-size:13px">'+r.r+'</td><td style="color:#4F8EF7">'+r.p+'</td><td><span style="font-family:\'JetBrains Mono\',monospace;font-size:8px;letter-spacing:.07em;border-radius:4px;padding:3px 8px;'+bs+'">'+r.pr+'</span></td></tr>';});
+})();
+(function(){
+  var el=document.getElementById('tier1-el');
+  t1.forEach(function(t){el.innerHTML+='<div class="deal-card" style="border-left:3px solid '+t.c+'"><div class="dh"><div><div class="dn">'+t.nm+' <span style="font-family:\'JetBrains Mono\',monospace;font-size:8px;letter-spacing:.07em;border-radius:3px;padding:2px 7px;background:'+t.sc+'18;border:1px solid '+t.sc+'35;color:'+t.sc+';margin-left:8px">'+t.st+'</span></div><div class="dt" style="color:'+t.c+'">'+t.tp+'</div></div><div class="dmeta"><div class="dchip"><div class="dcl">DEAL SIZE</div><div class="dcv">'+t.sz+'</div></div><div class="dchip"><div class="dcl">SCALE</div><div class="dcv">'+t.bd+'</div></div><div class="dchip"><div class="dcl">GEOGRAPHY</div><div class="dcv">'+t.geo+'</div></div></div></div><div class="db"><div><div class="dilbl">DEAL INTELLIGENCE</div><p class="ditxt">'+t.det+'</p><div class="dsrc">Source: '+t.src+'</div></div><div><div class="droilbl">MEDELITE ROI RATIONALE</div><p class="ditxt" style="color:#c5d5e8">'+t.roi+'</p><br><span style="font-family:\'JetBrains Mono\',monospace;font-size:8px;letter-spacing:.07em;border-radius:3px;padding:3px 8px;'+(t.fit==='HIGH'?'background:rgba(0,201,167,.1);border:1px solid rgba(0,201,167,.35);color:#00C9A7':'background:rgba(79,142,247,.1);border:1px solid rgba(79,142,247,.35);color:#4F8EF7')+'">'+t.fit+' FIT</span></div></div></div>';});
+})();
+(function(){
+  var el=document.getElementById('watch-el');
+  wd.forEach(function(t){el.innerHTML+='<div class="watching" style="border-top:2px solid '+t.c+'"><div class="wt"><div class="wn">'+t.nm+'</div><div class="wu" style="color:'+t.c+';background:'+t.c+'14;border:1px solid '+t.c+'30">'+t.urg+'</div></div><div class="wsz" style="color:'+t.c+'">Est. Size: '+t.sz+'</div><p class="wsig"><span>Market Signal: </span>'+t.sig+'</p><p class="wwhy"><span>MedElite Fit: </span>'+t.why+'</p></div>';});
+})();
+(function(){
+  var el=document.getElementById('action-el');
+  acts.forEach(function(a){el.innerHTML+='<div class="acard" style="border-left:3px solid '+a.c+'"><div class="atop"><div class="anm">'+a.a+'</div><div class="adu" style="color:'+a.c+'">'+a.due+'</div></div><p class="adsc">'+a.det+'</p></div>';});
+})();
+
+function buildDash(){
+  CB.dash=true;
+  var grid={color:'rgba(22,40,64,.75)',drawBorder:false};
+  var ticks={color:'#7A96B8',font:{size:10}};
+  var mo=['Nov','Dec','Jan','Feb','Mar','Apr'];
+  new Chart(document.getElementById('revChart'),{type:'line',data:{labels:mo,datasets:[{label:'Actual',data:[9.8,10.2,10.9,11.4,12.1,12.8],borderColor:'#00C9A7',backgroundColor:'rgba(0,201,167,.1)',fill:true,tension:.4,pointBackgroundColor:'#00C9A7',pointRadius:4},{label:'Target',data:[9.5,10.0,10.5,11.0,11.8,12.5],borderColor:'#4F8EF7',borderDash:[5,4],fill:false,tension:.4,pointRadius:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#7A96B8',font:{size:10},boxWidth:10}}},scales:{x:{grid:grid,ticks:ticks},y:{grid:grid,ticks:{color:'#7A96B8',font:{size:10},callback:function(v){return '$'+v+'M'}}}}}});
+  new Chart(document.getElementById('pipeChart'),{type:'bar',data:{labels:mo,datasets:[{label:'Qualified',data:[42,48,55,61,70,78],backgroundColor:'rgba(26,58,92,.85)',borderRadius:3},{label:'Proposed',data:[28,31,38,42,51,58],backgroundColor:'#4F8EF7',borderRadius:3},{label:'Closed Won',data:[11,14,16,19,23,27],backgroundColor:'#00C9A7',borderRadius:3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#7A96B8',font:{size:10},boxWidth:10}}},scales:{x:{grid:grid,ticks:ticks},y:{grid:grid,ticks:ticks}}}});
+}
+function buildRoad(){
+  CB.road=true;
+  var grid={color:'rgba(22,40,64,.75)',drawBorder:false};
+  var ticks={color:'#7A96B8',font:{size:10}};
+  new Chart(document.getElementById('roadChart'),{type:'line',data:{labels:['2025','2026','2027','2028','2029'],datasets:[{label:'Revenue',data:[125,162,215,280,365],borderColor:'#00C9A7',backgroundColor:'rgba(0,201,167,.1)',fill:true,tension:.4,pointBackgroundColor:'#00C9A7',pointRadius:5,pointHoverRadius:8},{label:'Target',data:[125,160,210,270,350],borderColor:'#4F8EF7',borderDash:[5,4],fill:false,tension:.4,pointRadius:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#7A96B8',font:{size:10},boxWidth:10}}},scales:{x:{grid:grid,ticks:ticks},y:{grid:grid,ticks:{color:'#7A96B8',font:{size:10},callback:function(v){return '$'+v+'M'}}}}}});
+}
+</script>
+</body>
+</html>
